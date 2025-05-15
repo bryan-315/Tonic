@@ -4,7 +4,14 @@
 const express = require("express");
 const morgan = require("morgan");
 
-
+// import the handlers
+const { 
+    createIngredient,
+    getIngredients,
+    getOneIngredient,
+    getAllDrinks,
+    createDrink
+} = require("./api_handlers/api_handlers.js");
 
 const App = express();
 
@@ -15,8 +22,6 @@ App.use(express.json());
 App.use(express.static("public"));
 
 
-
-
 App.get("/", (req, res) => {
     res.status(200).json({
         status: 200,
@@ -24,8 +29,17 @@ App.get("/", (req, res) => {
     });
 });
 
+// API endpoints
+App.post("/api/ingredients", createIngredient);
 
-// Cathc all endpoint
+App.get("/api/ingredients", getIngredients);
+App.get("/api/ingredients/:id", getOneIngredient);
+
+App.post("/api/drinks", createDrink);
+App.get("/api/drinks", getAllDrinks);
+
+
+// Catch all endpoint
 App.use((req, res) => {
     res.status(404).json({
         status: 404,

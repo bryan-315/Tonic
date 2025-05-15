@@ -9,11 +9,11 @@ const drinksArr = [
         glassware: "Coupe",
         method: "Shaken, Double-Strained",
         ingredients: [
-        { ingredientId: ObjectId("68216bbb440ad02fb90018bf"), amount: 1, unit: "oz" }, // Lime juice
-        { ingredientId: ObjectId("68216bbb440ad02fb90018be"), amount: 0.75, unit: "oz" }, // Simple syrup
-        { ingredientId: ObjectId("68216bbb440ad02fb90018c3"), amount: 1.25, unit: "oz" },
-        { ingredientId: ObjectId("68216bbb440ad02fb90018de"), amount: 0.25, unit: "oz"},
-        { ingredientId: ObjectId("6822baa4e15e93939e3244fa")}
+        { ingredientId: new ObjectId("68216bbb440ad02fb90018bf"), amount: 1, unit: "oz" },
+        { ingredientId: new ObjectId("68216bbb440ad02fb90018be"), amount: 0.75, unit: "oz" },
+        { ingredientId: new ObjectId("68216bbb440ad02fb90018c3"), amount: 1.25, unit: "oz" },
+        { ingredientId: new ObjectId("68216bbb440ad02fb90018de"), amount: 0.25, unit: "oz"},
+        { ingredientId: new ObjectId("6822baa4e15e93939e3244fa")}
         ],
         instructions: [
             "Add the vodka, coffee liqueur, espresso and orgreat in a shaker.",
@@ -30,11 +30,11 @@ const drinksArr = [
         glassware: "Rocks Glass",
         method: "Reverse-Dry Shaken",
         ingredients: [
-        { ingredientId: ObjectId("68216bbb440ad02fb90018c4"), amount: 1.5, unit: "oz" }, // Lime juice
-        { ingredientId: ObjectId("68216bbb440ad02fb90018b0"), amount: 0.75, unit: "oz" }, // Simple syrup
-        { ingredientId: ObjectId("68216bbb440ad02fb90018b1"), amount: 0.75, unit: "oz" },
-        { ingredientId: ObjectId("68216bbb440ad02fb90018f2"), amount: 0.5, unit: "oz"},
-        { ingredientId: ObjectId("6822baa4e15e93939e3244fa")}
+        { ingredientId: new ObjectId("68216bbb440ad02fb90018c4"), amount: 1.5, unit: "oz" },
+        { ingredientId: new ObjectId("68216bbb440ad02fb90018b0"), amount: 0.75, unit: "oz" },
+        { ingredientId: new ObjectId("68216bbb440ad02fb90018b1"), amount: 0.75, unit: "oz" },
+        { ingredientId: new ObjectId("68216bbb440ad02fb90018f2"), amount: 0.5, unit: "oz"},
+        { ingredientId: new ObjectId("6822baa4e15e93939e3244fa")}
         ],
         instructions: [
             "Add the bouron, syrup and lemon juice to a shaker",
@@ -46,7 +46,7 @@ const drinksArr = [
         ],
         createdBy: null, // Will be set once auth is up
         createdAt: new Date()
-    },
+    }
 ]
 
 
@@ -55,8 +55,10 @@ const dbImport = async () => {
         await client.connect();
         console.log('in');
         const db = client.db('tonic');
-        const result = await db.collection('ingredients').find({ category: 'Liqueur' }).toArray();
-        console.log(result)
+        const result = await db.collection('drinks').insertMany(drinksArr);
+        console.log('done');
+        console.log(result.insertedCount + " drinks were inserted");
+        console.log(result.acknowledged);
     } catch(err) {
         console.log('error');
         console.log(err.stack);

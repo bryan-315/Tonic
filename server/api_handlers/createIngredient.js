@@ -13,15 +13,29 @@ const createIngredient = async (req, res) => {
         if (!name || typeof name !== 'string') {
             return res.status(400).json({ error: 'Invalid name' });
         }
+        // Normalize the casing of the name
+        const normalizedName = name.trim().replace(/\b\w/g, char => char.toUpperCase());
+        if (normalizedName.length < 2) {
+            return res.status(400).json({ error: 'Name must be at least 2 characters long' });
+        }
         if (!category || typeof category !== 'string') {
             return res.status(400).json({ error: 'Invalid category' });
         }
-        if (!alcohol || typeof alcohol !== 'boolean') {
+        if (alcohol === undefined || typeof alcohol !== 'boolean') {
             return res.status(400).json({ error: 'Invalid alcohol' });
         }
+
+        // Check if the ingredient already exists
+        const existingIngredient = await db.collection('ingredients').findOne({ 
+            name: { $regex: `^${normalizedName}$`, $options: 'i' }, // Case-insensitive match
+        });
+        if (existingIngredient) {
+            return res.status(409).json({ error: 'Ingredient already exists' });
+        }
+
         // Create the new ingredient object
         const newIngredient = {
-            name,
+            name: normalizedName,
             category,
             alcohol
         };
@@ -38,6 +52,7 @@ const createIngredient = async (req, res) => {
         return res.status(201).json({ status: 201, message: 'Ingredient created successfully', ingredient: { ...newIngredient, _id: result.insertedId } });
     } catch (err) {
         console.error('Error connecting to the database', err);
+        return res.status(500).json({ error: 'Internal server error' });
     } finally {
         await client.close();
         console.log('out')
