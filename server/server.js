@@ -5,13 +5,24 @@ const express = require("express");
 const morgan = require("morgan");
 
 // import the handlers
+
+// Api
 const { 
     createIngredient,
     getIngredients,
     getOneIngredient,
     getAllDrinks,
-    createDrink
+    getOneDrink,
+    createDrink,
+
 } = require("./api_handlers/api_handlers.js");
+
+// Other handlers
+
+const {
+    createUser,
+    logIn,
+} = require("./user_handlers/user_handlers.js");
 
 const App = express();
 
@@ -37,7 +48,11 @@ App.get("/api/ingredients/:id", getOneIngredient);
 
 App.post("/api/drinks", createDrink);
 App.get("/api/drinks", getAllDrinks);
+App.get("/api/drinks/:drinkId", getOneDrink);
 
+// Users endpoints
+App.post("/user/signup", createUser);
+App.post("/user/login", logIn);
 
 // Catch all endpoint
 App.use((req, res) => {

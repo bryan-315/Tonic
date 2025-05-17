@@ -2,7 +2,10 @@ const { client } = require('../db');
 const { ObjectId } = require('mongodb');
 
 
-const getOneDrink = async (req, res) => {
+//TO MODIFY, I COPY PASTED THE GETONEDRINK FUNCTION
+
+
+const getUserDrinks = async (req, res) => {
     try {
         await client.connect();
         const db = client.db('tonic');
@@ -20,6 +23,7 @@ const getOneDrink = async (req, res) => {
         }
 
         return res.status(200).json({ status: 200, drink });
+
     } catch (err) {
         console.error('Error connecting to the database', err);
         return res.status(500).json({ status: 500, error: 'Internal server error' });
@@ -27,5 +31,3 @@ const getOneDrink = async (req, res) => {
         await client.close();
     }
 }
-
-module.exports = getOneDrink;
