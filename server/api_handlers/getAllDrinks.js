@@ -4,6 +4,7 @@ const { ObjectId } = require('mongodb');
 const getAllDrinks = async (req, res) => {
     try {
         await client.connect();
+        console.log('in')
         const db = client.db('tonic');
         const drinks = await db.collection('drinks').find({}).toArray();
         if (drinks.length === 0) {
@@ -15,6 +16,7 @@ const getAllDrinks = async (req, res) => {
         return res.status(500).json({ status: 500, error: 'Internal server error' });
     } finally {
         await client.close();
+        console.log('out')
     }
 }
 

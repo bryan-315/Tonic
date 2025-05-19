@@ -9,7 +9,7 @@ const createDrink = async (req, res) => {
         console.log('in')
         const db = client.db('tonic');
 
-        const { authorId, authorName, name,  tags, imageUrl, glassware, method, ingredients, instructions, description } = req.body;
+        const { authorId, username, name,  tags, imageUrl, glassware, method, ingredients, instructions, description, isOfficial } = req.body;
         
         // Check all fields
         // Send a 400 status and an error if the fields are not valid
@@ -18,7 +18,7 @@ const createDrink = async (req, res) => {
         if (!authorId || !ObjectId.isValid(authorId)) {
             return res.status(400).json({ status: 400, error: 'Invalid author ID' });
         }
-        if (!authorName || typeof authorName !== 'string') {
+        if (!username || typeof username !== 'string') {
             return res.status(400).json({ status: 400, error: 'Invalid author name' });
         }
         if (!name || typeof name !== 'string') {
@@ -71,7 +71,7 @@ const createDrink = async (req, res) => {
             instructions: instructions,
             createdBy: {
                 id: new ObjectId(authorId),
-                name: authorName
+                name: username
             },
             createdAt: new Date(),
             likes: 0,

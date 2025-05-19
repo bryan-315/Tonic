@@ -25,7 +25,8 @@ const createUser = async (req, res) => {
         }
 
         // Check if user already exists
-        await client.connect(); 
+        await client.connect();
+        console.log('in');
         const db = client.db('tonic'); 
         const users = db.collection("users");
 
@@ -51,7 +52,8 @@ const createUser = async (req, res) => {
         console.error("Error during signup:", err);
         res.status(500).json({ status: 500, message: "Server error during signup." });
     } finally {
-        await client.close(); 
+        await client.close();
+        console.log('out');
     }
 }
 

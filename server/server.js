@@ -14,6 +14,7 @@ const {
     getAllDrinks,
     getOneDrink,
     createDrink,
+    editDrink,
 
 } = require("./api_handlers/api_handlers.js");
 
@@ -49,6 +50,8 @@ App.get("/api/ingredients/:id", getOneIngredient);
 App.post("/api/drinks", createDrink);
 App.get("/api/drinks", getAllDrinks);
 App.get("/api/drinks/:drinkId", getOneDrink);
+
+App.patch("/api/drinks/:drinkId", editDrink);
 
 // Users endpoints
 App.post("/user/signup", createUser);

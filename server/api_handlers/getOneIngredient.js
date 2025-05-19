@@ -5,6 +5,7 @@ const getOneIngredient = async (req, res) => {
     try {
         const db = client.db('tonic');
         await client.connect();
+        console.log('in');
         const { id } = req.params;
         // Check if the ID is valid
         if (!ObjectId.isValid(id)) {
@@ -35,6 +36,7 @@ const getOneIngredient = async (req, res) => {
         });
     } finally {
         await client.close();
+        console.log('out');
     }
 }
 

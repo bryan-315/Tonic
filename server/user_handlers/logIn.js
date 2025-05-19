@@ -13,6 +13,7 @@ const logIn = async (req, res) => {
         }
         // Connect to the database
         await client.connect();
+        console.log('in');
         const db = client.db('tonic');
         const users = db.collection('users');
         // Check if user exists
@@ -35,6 +36,7 @@ const logIn = async (req, res) => {
         res.status(500).json({ status: 500, message: 'Server error during login.' });
     } finally {
         await client.close();
+        console.log('out');
     }
 }
 

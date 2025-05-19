@@ -6,6 +6,7 @@ const getOneIngredient = require("./getOneIngredient.js");
 const createDrink = require("./createDrink.js");
 const getAllDrinks = require("./getAllDrinks.js");
 const getOneDrink = require("./getOneDrink.js");
+const editDrink = require("./editDrink.js");
 
 
 
@@ -16,6 +17,7 @@ module.exports = {
     getOneIngredient,
     getOneDrink,
     createDrink,
-    getAllDrinks
+    getAllDrinks,
+    editDrink
 };
 
