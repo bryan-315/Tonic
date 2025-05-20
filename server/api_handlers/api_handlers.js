@@ -9,6 +9,7 @@ const getOneDrink = require("./getOneDrink.js");
 const editDrink = require("./editDrink.js");
 const likeDrink = require("./likeDrink.js");
 const unlikeDrink = require("./unlikeDrink.js");
+const deleteDrink = require("./deleteDrink.js");
 
 
 
@@ -21,6 +22,7 @@ module.exports = {
     getAllDrinks,
     editDrink,
     likeDrink,
-    unlikeDrink
+    unlikeDrink,
+    deleteDrink
 };
 

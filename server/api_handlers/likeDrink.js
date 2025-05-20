@@ -33,13 +33,13 @@ const likeDrink = async (req, res) => {
             return res.status(400).json({ status: 400, error: "You already liked this drink" });
         }
     
-        // Update user
+        // Add drink to user's liked drinks
         await users.updateOne(
             { _id: new ObjectId(authorId) },
             { $push: { likedDrinks: new ObjectId(drinkId) } }
         );
     
-        // Update drink
+        // Add a like to the drink
         await drinks.updateOne(
             { _id: new ObjectId(drinkId) },
             { $inc: { likes: 1 } }

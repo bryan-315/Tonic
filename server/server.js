@@ -16,7 +16,8 @@ const {
     createDrink,
     editDrink,
     likeDrink,
-    unlikeDrink
+    unlikeDrink,
+    deleteDrink
 
 } = require("./api_handlers/api_handlers.js");
 
@@ -55,7 +56,9 @@ App.get("/api/drinks/:drinkId", getOneDrink);
 
 App.patch("/api/drinks/:drinkId", editDrink);
 App.patch("/api/drinks/:drinkId/like", likeDrink);
-App.delete;("/api/drinks/:drinkId/unlike", unlikeDrink);
+App.patch("/api/drinks/:drinkId/unlike", unlikeDrink);
+
+App.delete("/api/drinks/:drinkId", deleteDrink);
 
 // Users endpoints
 App.post("/user/signup", createUser);
