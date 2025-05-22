@@ -3,7 +3,7 @@
 // import the needed node_modules.
 const express = require("express");
 const morgan = require("morgan");
-
+const cors = require("cors");
 // import the handlers
 
 // Api
@@ -30,11 +30,19 @@ const {
 
 const App = express();
 
+// Middleware
+// CORS middleware to allow cross-origin requests
+App.use(cors({
+    origin: "http://localhost:3000"
+    // Credentials for cookies (to implement later) credentials: true
+}));
+
 //Log info to the console
 App.use(morgan("tiny"));
 App.use(express.json());
 // Any requests for static files will go into the public folder
 App.use(express.static("public"));
+
 
 
 App.get("/", (req, res) => {

@@ -7,10 +7,14 @@ import About from './pages/About';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 
+// Component imports
+import Navbar from './components/Navbar';
+
 
 const App = () => {
     return (
         <Router>
+            <Navbar />
             <Routes>
                 <Route path='/' element={<Home />} />
                 <Route path='/about' element={<About />} />
