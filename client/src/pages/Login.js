@@ -1,42 +1,89 @@
 import { Link } from "react-router-dom";
-import { useAuth } from "../contexts/AuthContext" 
+import { useAuth } from "../contexts/AuthContext";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import LogoutButton from "../components/LogoutButton";
 
 const Login = () => {
+    // States/Hooks
+    const [input, setInput] = useState({
+        email: "",
+        password: ""
+    });
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState("");
+    const navigate = useNavigate();
     const { user, setUser } = useAuth();
-    const handleLogin = async (email, password) => {
-        const res = await fetch('/api/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password }),
+
+    // Functions
+    const handleInputChange = (e) => {
+        setInput({
+            ...input,
+            [e.target.name]: e.target.value
+        });
+    }
+
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        setError("");
+        const { email, password } = input;
+        // Basic validation
+        if (!email || !password) {
+            setError("All fields are required.");
+            return;
+        }
+        try {
+            const res = await fetch('/user/login', {
+                method: 'POST',
+                // for cookies later credentials: 'include'
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password }),
             });
             const data = await res.json();
-            if (res.ok) {
-            // data.user looks like { _id, name, email }
-            setUser(data.user);      // put it in React Context
-            } else {
-            // handle error
-            console.error(data.message);
+            if (!res.ok) {
+                // Handle error
+                console.error(data.message);
+                setLoading(false);
+                setError(data.message || 'Login failed');
+                throw new Error(data.message || 'Login failed');
             }
+            // Successful login
+            setLoading(false);
+            setUser(data.data);
+            navigate('/');
+        } catch (err) {
+            setError(err.message);
+        }
         };
 
     return (
         <>
         {!user && <div>
             <h1>Login to Your Tonic Account</h1>
-            <form>
-                <label>
-                    Email:
-                    <input type="email" name="email" />
-                </label>
-                <label>
-                    Password:
-                    <input type="password" name="password" />
-                </label>
-                <button type="submit">Login</button>
+            <form onSubmit={handleLogin}>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
+                <input
+                    type="email"
+                    name="email"
+                    value={input.email}
+                    onChange={handleInputChange}
+                    placeholder="Email"
+                    required
+                />
+                <input
+                    type="password"
+                    name="password"
+                    value={input.password}
+                    onChange={handleInputChange}
+                    placeholder="Password"
+                    required
+                />
+                {!loading && <button type="submit">Log in</button>}
+                {loading && <button disabled>Loading...</button>}
+                
             </form>
             <p>Don't have an account? <Link to="/signup">Sign up</Link></p>
         </div>}

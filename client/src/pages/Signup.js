@@ -28,7 +28,6 @@ const Signup = () => {
         e.preventDefault();
         setError("");
         const { username, email, password, confirmPassword } = input;
-    
         // Basic validation
         if (!username || !email || !password || !confirmPassword) {
             setError("All fields are required.");
@@ -60,7 +59,6 @@ const Signup = () => {
                 setError(err.message);
         }
     }
-
 
     return (
         <div className="signup">

@@ -10,7 +10,7 @@ import { NavLink } from 'react-router-dom';
 //import './Navbar.css'; // Optional: Add custom styles for your navbar
 
 // Component Imports
-//...
+import LogoutButton from './LogoutButton';
 
 
 const Navbar = () => {
@@ -55,14 +55,17 @@ const Navbar = () => {
                 placeholder="Search For a Drink"
                 />
             </div>
+            {user && <p>Welcome, {user.username}</p>}
+            {user && <NavLink to="/profile">
+                {user.name}
+            </NavLink>}
+            {user && <LogoutButton />}
             {!user && <NavLink to="login">
                 Log in
             </NavLink>}
             {!user && <NavLink to="signup">
                 Sign up
             </NavLink>}
-
-
         </nav>
     );
 };
