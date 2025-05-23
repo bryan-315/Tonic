@@ -55,7 +55,10 @@ const Login = () => {
             setUser(data.data);
             navigate('/');
         } catch (err) {
-            setError(err.message);
+            setLoading(false);
+            // Handle error
+            console.error(err);
+            setError(err.message || 'Login failed');
         }
         };
 
