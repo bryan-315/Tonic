@@ -76,7 +76,7 @@ const createDrink = async (req, res) => {
             createdAt: new Date(),
             likes: 0,
             dislikes: 0,
-            isOfficial: authorId === "bryanId"
+            isOfficial: Boolean(isOfficial)
         }
         // Insert the new ingredient into the database
         const result = await db.collection('drinks').insertOne(newDrink);
