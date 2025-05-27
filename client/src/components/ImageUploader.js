@@ -1,10 +1,9 @@
-// components/ImageUploader.jsx
 import { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 
 const CLOUD_NAME    = 'djijwros2';
 const UPLOAD_PRESET = 'tonic_unsigned';
-const UPLOAD_URL    = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`;
+const UPLOAD_URL    = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`;
 
 const ImageUploader = ({ imageUrl, onUpload }) => {
     const onDrop = useCallback(async files => {
@@ -15,6 +14,10 @@ const ImageUploader = ({ imageUrl, onUpload }) => {
 
         const res  = await fetch(UPLOAD_URL, { method: 'POST', body: data });
         const json = await res.json();
+        console.log('Upload response:', json);
+        if (!res.ok) {
+            throw new Error(json.error || 'Failed to upload image');
+        }
         onUpload(json.secure_url);
     }, [onUpload]);
 
