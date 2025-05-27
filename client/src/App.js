@@ -15,7 +15,9 @@ import CreateDrink from './pages/CreateDrink';
 import DrinkPage from './pages/DrinkPage';
 import AllDrinks from './pages/AllDrinks';
 import UserCreations from './pages/UserCreations';
+import LikedDrinks from './pages/LikedDrinks';
 import EditDrink from './pages/EditDrink';
+
 // Component imports
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
@@ -44,6 +46,7 @@ const App = () => {
                         <Route path='/create' element={<CreateDrink />} />
                         <Route path='/all-drinks' element={<AllDrinks />} />
                         <Route path='/user/:userId/drinks' element={<UserCreations />} />
+                        <Route path='/liked-drinks' element={<LikedDrinks />} />
                         <Route path='/drinks/:drinkId' element={<DrinkPage />} />
                         <Route path='/drinks/:drinkId/edit' element={<EditDrink />} />
                         {/* Add more routes as needed */}

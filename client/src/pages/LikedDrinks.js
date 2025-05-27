@@ -1,32 +1,30 @@
 import { useEffect, useState } from "react";
+import { useAuth } from "../contexts/AuthContext";
 
 import DrinkCard from "../components/DrinkCard";
 import Loading from "../components/Loading";
 import Error from "../components/Error";
 
-const AllDrinks = () => {
+const LikedDrinks = () => {
     const [drinks, setDrinks] = useState(null);
     const [error, setError] = useState(null);
-    
 
+    const { user } = useAuth();
+    
     useEffect(() => {
         const fetchDrinks = async () => {
             try {
-                const res = await fetch('/api/drinks');
+                const res = await fetch(`/api/user/${user._id}/liked`);
                 const data = await res.json();
                 if (!res.ok) {
                     setError(data.error || data.message || 'Unknown error');
                     setDrinks([]);
                 } else {
-                    // Sort drinks alphabetically
-                    const sortedDrinks = data.drinks.sort((a, b) =>
-                        a.name.localeCompare(b.name, undefined, { sensitivity: 'base' })
-                    );
-                    console.log('Fetched drinks:', sortedDrinks);
-                    setDrinks(sortedDrinks);
+                    setDrinks(data.drinks);
                 }
             } catch (networkErr) {
                 // network‐level failure (DNS, offline, CORS, etc.)
+                console.error(networkErr);
                 setError('Network error - please check your connection.');
                 setDrinks([]);
             }
@@ -35,8 +33,8 @@ const AllDrinks = () => {
     }, []);
     return (
         <div>
-            <h1>All Drinks</h1>
-            <p>This is ALL of the drinks in our records, sorted alphabetically</p>
+            <h1>Your Liked Drinks</h1>
+            
             {!drinks && !error && <Loading message="Loading all drinks..."/>}
             {error && <Error errormsg={error} />}
             {drinks && !error && (
@@ -51,4 +49,4 @@ const AllDrinks = () => {
     );
 }
 
-export default AllDrinks;
+export default LikedDrinks;

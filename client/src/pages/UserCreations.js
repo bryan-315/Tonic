@@ -13,6 +13,12 @@ const UserCreations = () => {
     const { userId } = useParams();
 
     useEffect(() => {
+        // Reset states on userId change (for going from user x to user y)
+        setDrinks(null);
+        setError(null);
+        setDrinksOwner(null);
+
+        // Fetch drinks created by the user
         const fetchDrinks = async () => {
             try {
                 const res = await fetch(`/api/user/${userId}/drinks`);
@@ -32,7 +38,7 @@ const UserCreations = () => {
             }
         };
         fetchDrinks();
-    }, []);
+    }, [userId]);
     return (
         <div>
             {!drinks && !error && <Loading message="Loading drinks..."/>}
