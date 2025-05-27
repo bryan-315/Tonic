@@ -51,7 +51,7 @@ const editDrink = async (req, res) => {
         }
 
         // Create the update object
-        const updatableFields = ['name', 'tags', 'imageUrl', 'glassware', 'method', 'ingredients', 'instructions', 'description'];
+        const updatableFields = ['name', 'tags', 'imageUrl', 'glassware', 'method', 'ingredients', 'instructions', 'description', 'isOfficial'];
         const fieldsToUpdate = {};
         updatableFields.forEach((field) => {
         if (req.body[field] !== undefined) {

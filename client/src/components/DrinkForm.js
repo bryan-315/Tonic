@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import DrinkListField from './DrinkListField';
 import ImageUploader from './ImageUploader';
 import Error from '../components/Error';
 
 const DrinkForm = ({ initialData, onSubmit, submitLabel = 'Save' }) => {
     const [formData, setFormData] = useState(initialData);
-    const [error, setError]       = useState('');
-    const [loading, setLoading]   = useState(false);
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     // Reset formData if initialData changes (e.g. after fetch)
     useEffect(() => {
@@ -41,7 +43,7 @@ const DrinkForm = ({ initialData, onSubmit, submitLabel = 'Save' }) => {
 
 
         <label style={{ display: 'block', marginBottom: '1rem' }}>
-            Name *
+            Name
             <input
             type="text"
             name="name"
@@ -53,7 +55,7 @@ const DrinkForm = ({ initialData, onSubmit, submitLabel = 'Save' }) => {
         </label>
 
         <DrinkListField
-            label="Tags *"
+            label="Tags"
             values={formData.tags}
             placeholder="e.g. tiki"
             onChange={tags => setFormData(prev => ({ ...prev, tags }))}
@@ -87,14 +89,14 @@ const DrinkForm = ({ initialData, onSubmit, submitLabel = 'Save' }) => {
         </label>
 
         <DrinkListField
-            label="Ingredients *"
+            label="Ingredients"
             values={formData.ingredients}
             placeholder="e.g. 2 oz rum"
             onChange={ingredients => setFormData(prev => ({ ...prev, ingredients }))}
         />
 
         <DrinkListField
-            label="Instructions *"
+            label="Instructions"
             values={formData.instructions}
             placeholder="e.g. Shake with ice"
             onChange={instructions => setFormData(prev => ({ ...prev, instructions }))}
@@ -128,6 +130,15 @@ const DrinkForm = ({ initialData, onSubmit, submitLabel = 'Save' }) => {
         >
             {loading ? 'Saving…' : submitLabel}
         </button>
+        <Link
+            to="#"
+            onClick={e => { 
+            e.preventDefault(); 
+            navigate(-1); 
+            }}
+            style={{ fontSize: '0.75rem', textDecoration: 'underline', cursor: 'pointer' }}>
+            Cancel
+        </Link>
         </form>
     );
 }

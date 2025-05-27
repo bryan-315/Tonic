@@ -30,7 +30,7 @@ const DrinkPage = () => {
                 }
             } catch (networkErr) {
                 // network‐level failure (DNS, offline, CORS, etc.)
-                setError('Network error – please check your connection.');
+                setError('Network error - please check your connection.');
                 setDrink(null);
             }
         };
@@ -56,7 +56,7 @@ const DrinkPage = () => {
                         initialLiked={user?.likedDrinks?.some(id => id === drink._id)}
                         />
                         :
-                        <p><Link to="/login">Log in</Link> to like this drink!</p>}
+                        <p><Link to="/login">Log in</Link> to like this drink</p>}
                     </div>
                     <div>
                         <BigImg
@@ -66,7 +66,6 @@ const DrinkPage = () => {
                         />
                     </div>
                     <div>
-                        {/* Glassware and method */}
                         {drink.glassware && <p><strong>Glassware:</strong> {drink.glassware}</p>}
                         {drink.method && <p><strong>Method:</strong> {drink.method}</p>}
 
