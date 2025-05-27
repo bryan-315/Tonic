@@ -6,25 +6,30 @@ const { ObjectId } = require('mongodb');
 
 
 const getUserDrinks = async (req, res) => {
+    const { userId } = req.params;
+
+    // Validate userId
+    if (!userId || !ObjectId.isValid(userId)) {
+        return res.status(400).json({ status: 400, error: 'Invalid user ID' });
+    }
+
     try {
         await client.connect();
         console.log('in');
         const db = client.db('tonic');
-        const { drinkId } = req.params;
 
-        // Check if the drinkId is a valid ObjectId
-        if (!ObjectId.isValid(drinkId)) {
-            return res.status(400).json({ status: 400, error: 'Invalid drink ID' });
+        // Find drinks where createdBy.id matches the given userId
+        const drinks = await db
+        .collection('drinks')
+        .find({ 'createdBy.id': new ObjectId(userId) })
+        .sort({ createdAt: -1 })
+        .toArray();
+
+        if (drinks.length === 0) {
+        return res.status(404).json({ status: 404, message: 'No drinks found for this user' });
         }
 
-        const drink = await db.collection('drinks').findOne({ _id: new ObjectId(drinkId) });
-
-        if (!drink) {
-            return res.status(404).json({ status: 404, message: 'Drink not found' });
-        }
-
-        return res.status(200).json({ status: 200, drink });
-
+        return res.status(200).json({ status: 200, drinks });
     } catch (err) {
         console.error('Error connecting to the database', err);
         return res.status(500).json({ status: 500, error: 'Internal server error' });
@@ -32,4 +37,7 @@ const getUserDrinks = async (req, res) => {
         await client.close();
         console.log('out');
     }
-}
+};
+
+
+module.exports = getUserDrinks;

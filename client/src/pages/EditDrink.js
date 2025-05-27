@@ -1,15 +1,17 @@
-import React, { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { useDropzone } from 'react-dropzone';
+import { useParams } from 'react-router-dom';
 
-import ImageUploader from '../components/ImageUploader';
-import DrinkListField from '../components/DrinkListField';
+import Loading from '../components/Loading';
+import Error from '../components/Error';
 
 const CLOUD_NAME = 'djijwros2';         // replace with your Cloudinary cloud name
 const UPLOAD_PRESET = 'tonic_unsigned';   // replace with your unsigned upload preset
 
-const CreateDrink = () => {
+const EditDrink = () => {
+    const { drinkId } = useParams();
     const { user } = useAuth();
     const navigate = useNavigate();
     const [ formData, setFormData ] = useState({
@@ -24,34 +26,62 @@ const CreateDrink = () => {
         isOfficial: false,
     });
     const [error, setError] = useState('');
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     if (!user) {
         return <p>Please log in to create a new recipe.</p>;
     }
 
-//    const handleFieldChange = (field, index) => (e) => {
-//        const value = e.target.value;
-//        setFormData(prev => {
-//        const updatedArray = [...prev[field]];
-//        updatedArray[index] = value;
-//        return { ...prev, [field]: updatedArray };
-//        });
-//    };
-//
-//    const handleAddField = (field) => () => {
-//        setFormData(prev => ({
-//        ...prev,
-//        [field]: [...prev[field], ''],
-//        }));
-//    };
-//
-//    const handleRemoveField = (field, index) => () => {
-//        setFormData(prev => ({
-//        ...prev,
-//        [field]: prev[field].filter((_, i) => i !== index),
-//        }));
-//    };
+    useEffect(() => {
+        const loadDrink = async () => {
+            try {
+                const res  = await fetch(`/api/drinks/${drinkId}`);
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.error || data.message);
+        
+                // Populate formData with the existing values:
+                setFormData({
+                name:         data.drink.name,
+                tags:         data.drink.tags,
+                imageUrl:     data.drink.imageUrl || '',
+                glassware:    data.drink.glassware || '',
+                method:       data.drink.method || '',
+                ingredients:  data.drink.ingredients,
+                instructions: data.drink.instructions,
+                description:  data.drink.description || '',
+                isOfficial:   data.drink.isOfficial,
+                });
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+            };
+            loadDrink();
+        }, [drinkId]);
+
+    const handleFieldChange = (field, index) => (e) => {
+        const value = e.target.value;
+        setFormData(prev => {
+        const updatedArray = [...prev[field]];
+        updatedArray[index] = value;
+        return { ...prev, [field]: updatedArray };
+        });
+    };
+
+    const handleAddField = (field) => () => {
+        setFormData(prev => ({
+        ...prev,
+        [field]: [...prev[field], ''],
+        }));
+    };
+
+    const handleRemoveField = (field, index) => () => {
+        setFormData(prev => ({
+        ...prev,
+        [field]: prev[field].filter((_, i) => i !== index),
+        }));
+    };
 
     const handleChangeSimple = (e) => {
         const { name, value, type, checked } = e.target;
@@ -101,10 +131,9 @@ const CreateDrink = () => {
             isOfficial: formData.isOfficial,
         };
 
-        const res = await fetch('/api/drinks', {
-            method: 'POST',
+        const res = await fetch(`/api/drinks/${drinkId}`, {
+            method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
-            credentials: 'include',
             body: JSON.stringify(drinkObj),
         });
         const data = await res.json();
@@ -112,7 +141,10 @@ const CreateDrink = () => {
             console.error('Error posting drink:', data, user.username, user._id);
             throw new Error(data.error || 'Failed to post drink');
         }
-        console.log('Drink posted successfully:', data);
+        console.log('Drink updated successfully:', data);
+        // Redirect to the drink page after successful update
+        
+
         navigate(`/drinks/${data.drink._id}`);
         } catch (err) {
         setError(err.message);
@@ -121,13 +153,20 @@ const CreateDrink = () => {
         }
     };
 
+    if (loading && !error) {
+        return <Loading />;
+    }
+    if (error) {
+        return <Error errormsg={error} />;
+    }
+    // Render the form
     return (
         <form onSubmit={handleSubmit} style={{ maxWidth: 600, margin: '2rem auto' }}>
-        <h1>Create a New Drink</h1>
+        <h1>Modify Your Recipe</h1>
         {error && <p style={{ color: 'red' }}>{error}</p>}
 
         <label>
-            Drink Name *
+            Drink Name
             <input
             type="text"
             name="name"
@@ -137,18 +176,31 @@ const CreateDrink = () => {
             />
         </label>
 
-        <DrinkListField
-            label="Tags"
-            values={formData.tags}
-            onChange={(newTags) => setFormData(prev => ({ ...prev, tags: newTags }))}
-            placeholder="e.g. Sweet, Sour"
-        />
+        <fieldset>
+            <legend>Tags *</legend>
+            {formData.tags.map((tag, idx) => (
+            <div key={idx} style={{ display: 'flex', alignItems: 'center', marginBottom: '0.5rem' }}>
+                <input
+                type="text"
+                value={formData.tags[idx]}
+                onChange={handleFieldChange('tags', idx)}
+                placeholder="e.g. tiki"
+                required={idx === 0}
+                style={{ flex: 1 }}
+                />
+                {formData.tags.length > 1 && (
+                <button type="button" onClick={handleRemoveField('tags', idx)} style={{ marginLeft: '0.5rem' }}>
+                    ×
+                </button>
+                )}
+            </div>
+            ))}
+            <button type="button" onClick={handleAddField('tags')}>
+            + Add Tag
+            </button>
+        </fieldset>
 
-        <ImageUploader
-            imageUrl={formData.imageUrl}
-            onUpload={(url) => setFormData(prev => ({ ...prev, imageUrl: url }))}
-        />
-        {/*<fieldset>
+        <fieldset>
             <legend>Image (optional)</legend>
             <div {...getRootProps()} style={{ border: '2px dashed #aaa', padding: '1rem', textAlign: 'center' }}>
             <input {...getInputProps()} />
@@ -167,7 +219,7 @@ const CreateDrink = () => {
                     />
                 </div>
                 )}
-        </fieldset>*/}
+        </fieldset>
 
         <label>
             Glassware (optional)
@@ -189,19 +241,53 @@ const CreateDrink = () => {
             />
         </label>
 
-        <DrinkListField
-            label="Ingredients"
-            values={formData.ingredients}
-            onChange={(newIngredients) => setFormData(prev => ({ ...prev, ingredients: newIngredients }))}
-            placeholder="e.g. 2 oz Raspberry Syrup"
-        />
+        <fieldset>
+            <legend>Ingredients *</legend>
+            {formData.ingredients.map((ing, idx) => (
+            <div key={idx} style={{ display: 'flex', alignItems: 'center', marginBottom: '0.5rem' }}>
+                <input
+                type="text"
+                value={ing}
+                onChange={handleFieldChange('ingredients', idx)}
+                placeholder="e.g. 2 oz rum"
+                required={idx === 0}
+                style={{ flex: 1 }}
+                />
+                {formData.ingredients.length > 1 && (
+                <button type="button" onClick={handleRemoveField('ingredients', idx)} style={{ marginLeft: '0.5rem' }}>
+                    ×
+                </button>
+                )}
+            </div>
+            ))}
+            <button type="button" onClick={handleAddField('ingredients')}>
+            + Add Ingredient
+            </button>
+        </fieldset>
 
-        <DrinkListField
-            label="Instructions"
-            values={formData.instructions}
-            onChange={(newInstructions) => setFormData(prev => ({ ...prev, instructions: newInstructions }))}
-            placeholder="e.g. Shake with ice"
-        />
+        <fieldset>
+            <legend>Instructions *</legend>
+            {formData.instructions.map((inst, idx) => (
+            <div key={idx} style={{ display: 'flex', alignItems: 'center', marginBottom: '0.5rem' }}>
+                <input
+                type="text"
+                value={inst}
+                onChange={handleFieldChange('instructions', idx)}
+                placeholder="e.g. Shake with ice"
+                required={idx === 0}
+                style={{ flex: 1 }}
+                />
+                {formData.instructions.length > 1 && (
+                <button type="button" onClick={handleRemoveField('instructions', idx)} style={{ marginLeft: '0.5rem' }}>
+                    ×
+                </button>
+                )}
+            </div>
+            ))}
+            <button type="button" onClick={handleAddField('instructions')}>
+            + Add Step
+            </button>
+        </fieldset>
 
         <label>
             Description
@@ -223,10 +309,11 @@ const CreateDrink = () => {
         </label>
 
         <button type="submit" disabled={loading} style={{ marginTop: '1rem' }}>
-            {loading ? 'Posting...' : 'Post Drink'}
+            {loading ? 'Updating...' : 'Update Drink'}
         </button>
         </form>
     );
 };
 
-export default CreateDrink;
+
+export default EditDrink;

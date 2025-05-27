@@ -20,13 +20,9 @@ const DrinkPage = () => {
     useEffect(() => {
         const fetchDrink = async () => {
             try {
-                const res = await fetch(`/api/drinks/${drinkId}`, {
-                credentials: 'include',
-                });
+                const res = await fetch(`/api/drinks/${drinkId}`);
                 const data = await res.json();
-        
                 if (!res.ok) {
-                // backend sent { status: XXX, error: '…' } or { status: XXX, message: '…' }
                 setError(data.error || data.message || 'Unknown error');
                 setDrink(null);
                 } else {
@@ -37,17 +33,22 @@ const DrinkPage = () => {
                 setError('Network error – please check your connection.');
                 setDrink(null);
             }
-            };
-        
-            fetchDrink();
-        }, []);
+        };
+        fetchDrink();
+    }, []);
+    
+    const isOwner = user && drink && user._id === drink.createdBy.id;
     return (
         <div>
-            {!drink && !error && <Loading />}
+            {!drink && !error && <Loading message='Loading drink info...'/>}
             {error && <Error errormsg={error}/>}
             {drink && !error && 
                 <div>
                     <h1>{drink.name}</h1>
+                    {isOwner && <Link to={`/drinks/${drinkId}/edit`} className="btn btn-edit">
+                        Edit Recipe
+                    </Link>
+                    }
                     <div>
                         {user ? <LikeDiv 
                         drinkId={drinkId}

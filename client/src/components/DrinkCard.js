@@ -5,8 +5,9 @@ import SmallImg from "./SmallImg";
 
 
 const DrinkCard = ({ drinkObj }) => {
-
+    console.log('DrinkCard', drinkObj);
     const { _id, name, imageUrl, tags, createdBy, createdAt } = drinkObj;
+    console.log(tags)
     return (
         <Link to={`/drinks/${drinkObj._id}`}>
             <div className="drink-card">
@@ -15,10 +16,18 @@ const DrinkCard = ({ drinkObj }) => {
                 alt={name}
                 />
                 <p>{name}</p>
-                <p>{createdBy.name}</p>
-                <p>{new Date(createdAt).toLocaleDateString()}</p>
-                <p>{tags.join(', ')}</p>
+                {createdBy && <p>Created by: {createdBy.name}</p>}
+                <p>Added on{new Date(createdAt).toLocaleDateString()}</p>
+                {tags && <ul>
+                    {tags.map((tag, index) => (
+                        <li key={index} className="tag">
+                            {tag}
+                        </li>
+                    ))}    
+                </ul>}
             </div>
         </Link>
     )
 }
+
+export default DrinkCard;

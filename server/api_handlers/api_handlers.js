@@ -10,6 +10,8 @@ const editDrink = require("./editDrink.js");
 const likeDrink = require("./likeDrink.js");
 const unlikeDrink = require("./unlikeDrink.js");
 const deleteDrink = require("./deleteDrink.js");
+const getUserDrinks = require("./getUserDrinks.js");
+const getLikedDrinks = require("./getLikedDrinks.js");
 
 
 
@@ -20,6 +22,8 @@ module.exports = {
     getOneDrink,
     createDrink,
     getAllDrinks,
+    getUserDrinks,
+    getLikedDrinks,
     editDrink,
     likeDrink,
     unlikeDrink,

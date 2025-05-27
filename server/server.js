@@ -13,6 +13,8 @@ const {
     getOneIngredient,
     getAllDrinks,
     getOneDrink,
+    getUserDrinks,
+    getLikedDrinks,
     createDrink,
     editDrink,
     likeDrink,
@@ -61,6 +63,8 @@ App.get("/api/ingredients/:id", getOneIngredient);
 App.post("/api/drinks", createDrink);
 App.get("/api/drinks", getAllDrinks);
 App.get("/api/drinks/:drinkId", getOneDrink);
+App.get("/api/user/:userId/liked", getLikedDrinks);
+App.get("/api/user/:userId/drinks", getUserDrinks);
 
 App.patch("/api/drinks/:drinkId", editDrink);
 App.patch("/api/drinks/:drinkId/like", likeDrink);
