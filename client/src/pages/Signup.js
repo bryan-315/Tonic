@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const Signup = () => {
     // States/Hooks
@@ -54,6 +55,9 @@ const Signup = () => {
                 
                 // Successful signup
                 setUser(data.user);
+                // Show success message
+                toast.success("Account created successfully!");
+                // Redirect to home page
                 navigate('/');
         } catch (err) {
                 setError(err.message);

@@ -5,9 +5,7 @@ import SmallImg from "./SmallImg";
 
 
 const DrinkCard = ({ drinkObj }) => {
-    console.log('DrinkCard', drinkObj);
     const { _id, name, imageUrl, tags, createdBy, createdAt } = drinkObj;
-    console.log(tags)
     return (
         <Link to={`/drinks/${drinkObj._id}`}>
             <div className="drink-card">

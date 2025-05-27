@@ -103,7 +103,7 @@ const DrinkPage = () => {
                         </section>
                         {/* Creator & Date */}
                         <section>
-                        <p><strong>Created by:</strong> {drink.createdBy.name}</p>
+                        <p><strong>Created by:</strong> <Link to={`/user/${drink.createdBy.id}/drinks`}>{drink.createdBy.name}</Link></p>
                         <p><strong>Created at:</strong> {new Date(drink.createdAt).toLocaleDateString()}</p>
                         </section>
                     </div>

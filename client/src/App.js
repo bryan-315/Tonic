@@ -1,5 +1,6 @@
 // Imports for React and other libraries
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 
 // Page imports
 import Home from './pages/Home';
@@ -13,6 +14,7 @@ import Profile from './pages/Profile';
 import CreateDrink from './pages/CreateDrink';
 import DrinkPage from './pages/DrinkPage';
 import AllDrinks from './pages/AllDrinks';
+import UserCreations from './pages/UserCreations';
 import EditDrink from './pages/EditDrink';
 // Component imports
 import Navbar from './components/Navbar';
@@ -24,6 +26,10 @@ const App = () => {
     return (
         <Router>
             <Navbar />
+            <Toaster 
+            position='top-center'
+            toastOptions={{ duration: 3000 }}
+            />
             <div style={{ display: 'flex' }}>
                 <Sidebar />
                 <main>
@@ -37,6 +43,7 @@ const App = () => {
                         {/* Drinks */}
                         <Route path='/create' element={<CreateDrink />} />
                         <Route path='/all-drinks' element={<AllDrinks />} />
+                        <Route path='/user/:userId/drinks' element={<UserCreations />} />
                         <Route path='/drinks/:drinkId' element={<DrinkPage />} />
                         <Route path='/drinks/:drinkId/edit' element={<EditDrink />} />
                         {/* Add more routes as needed */}

@@ -2,9 +2,6 @@ const { client } = require('../db');
 const { ObjectId } = require('mongodb');
 
 
-//TO MODIFY, I COPY PASTED THE GETONEDRINK FUNCTION
-
-
 const getUserDrinks = async (req, res) => {
     const { userId } = req.params;
 

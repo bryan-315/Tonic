@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 import DrinkForm from '../components/DrinkForm';
 
@@ -46,7 +47,9 @@ const CreateDrink = () => {
     if (!res.ok) {
         throw new Error(data.error || 'Failed to post drink');
     }
-
+    // Show success message
+    toast.success('Drink created successfully!');
+    // Navigate to the new drink's page
     navigate(`/drinks/${data.drink._id}`);
     };
 

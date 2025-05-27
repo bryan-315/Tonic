@@ -35,7 +35,7 @@ const Sidebar = ({ children }) => {
                     </NavLink>
                 </li>
                 {user && <li>
-                    <NavLink to={`drinks/${user._id}`} className="active">
+                    <NavLink to={`/user/${user._id}/drinks`} className="active">
                         My Drinks
                     </NavLink>
                 </li>}
