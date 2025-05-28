@@ -33,9 +33,8 @@ const Navbar = () => {
         if (!trimmed) {
             navigate("/");
         } else {
-            navigate(`/?q=${encodeURIComponent(trimmed)}`);
+            navigate(`/all-drinks?q=${encodeURIComponent(query.trim())}`);
         }
-        // Implement search functionality here
     }
 
     return (
@@ -57,12 +56,10 @@ const Navbar = () => {
             </div>
             {user ? (
             <>
-                {/* New recipe button in navbar */}
+
                 <NavLink to="/create" className="btn btn-small">
                 Create Something
                 </NavLink>
-
-                {/* Keep logout */}
                 <LogoutButton />
             </>
             ) : (

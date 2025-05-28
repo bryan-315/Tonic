@@ -1,4 +1,4 @@
-import{ useState } from 'react';
+import{ useState, useEffect } from 'react';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -7,7 +7,7 @@ const LikeDiv = ({ drinkId, initialCount = 0, initialLiked = false  }) => {
     const [ count, setCount ] = useState(initialCount);
     const [ loading, setLoading ] = useState(false);
 
-    const { user } = useAuth();
+    const { user, setUser } = useAuth();
 
     const handleToggle = async () => {
         if (loading) return;
@@ -24,6 +24,15 @@ const LikeDiv = ({ drinkId, initialCount = 0, initialLiked = false  }) => {
                 if (res.ok) {
                     setLiked(!liked);
                     setCount(prev => (liked ? prev - 1 : prev + 1));
+
+                    // Update user context
+                    setUser(prev => {
+                        if (!prev) return prev; // If no user, just return
+                        const updatedLikedDrinks = liked 
+                            ? prev.likedDrinks.filter(id => id !== drinkId)
+                            : [...prev.likedDrinks, drinkId];
+                        return { ...prev, likedDrinks: updatedLikedDrinks };
+                    });
                 } else {
                     console.error('Error toggling like:', data.error || data.message);
                 }

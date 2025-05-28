@@ -1,9 +1,7 @@
-
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-// import your LikeButton component when ready
-// import LikeButton from '../components/LikeButton';
+
 
 import LikeDiv from '../components/LikeDiv';
 import Loading from '../components/Loading';
@@ -30,8 +28,11 @@ const DrinkPage = () => {
                 }
             } catch (networkErr) {
                 // network‐level failure (DNS, offline, CORS, etc.)
+                console.error(networkErr);
                 setError('Network error - please check your connection.');
                 setDrink(null);
+            } finally {
+                console.log(user)
             }
         };
         fetchDrink();
