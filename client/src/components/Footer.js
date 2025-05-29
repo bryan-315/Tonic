@@ -7,7 +7,7 @@ const Footer = () => (
         <p>
             <a href="/">Home</a> •{' '}
             <a href="/about">About</a> •{' '}
-            <a href="https://github.com/your‐username/tonic" target="_blank" rel="noreferrer">
+            <a href="https://github.com/bryan-315/tonic" target="_blank" rel="noreferrer">
             GitHub
             </a>
         </p>

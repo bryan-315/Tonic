@@ -15,12 +15,12 @@ const BigImg = ({ url, alt = '' }) => {
         src={transformed}
         alt={alt}
         style={{
-            width: '100%',        // responsive width
-            maxWidth: '250px',    // don't grow too large
-            aspectRatio: '1 / 1', // maintain square box
-            objectFit: 'cover',   // crop to fill
+            width: '100%', 
+            maxWidth: '250px',
+            aspectRatio: '1 / 1',
+            objectFit: 'cover', 
             display: 'block',
-            margin: '0 auto',     // center
+            margin: '0 auto',
         }}
         />
     );

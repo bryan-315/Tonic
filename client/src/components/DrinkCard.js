@@ -10,8 +10,8 @@ const DrinkCard = ({ drinkObj }) => {
         <Link to={`/drinks/${drinkObj._id}`}>
             <div className="drink-card">
                 <SmallImg 
-                url={imageUrl || 'https://via.placeholder.com/300'}
-                alt={name}
+                url={imageUrl || '/TonicPlaceholder.png'}
+                alt={name || 'Drink Image'}
                 />
                 <p>{name}</p>
                 {createdBy && <p>Created by: {createdBy.name}</p>}

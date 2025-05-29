@@ -31,8 +31,6 @@ const DrinkPage = () => {
                 console.error(networkErr);
                 setError('Network error - please check your connection.');
                 setDrink(null);
-            } finally {
-                console.log(user)
             }
         };
         fetchDrink();
@@ -60,11 +58,10 @@ const DrinkPage = () => {
                         <p><Link to="/login">Log in</Link> to like this drink</p>}
                     </div>
                     <div>
-                        <BigImg
-                            url={drink.imageUrl || 'https://via.placeholder.com/300'}
-                            alt={drink.name}
-                            
-                        />
+                    <BigImg
+                    url={drink.imageUrl || '/TonicPlaceholder.png'}
+                    alt={drink.name || 'Drink Image'}
+                    />
                     </div>
                     <div>
                         {drink.glassware && <p><strong>Glassware:</strong> {drink.glassware}</p>}

@@ -12,7 +12,6 @@ const LikeDiv = ({ drinkId, initialCount = 0, initialLiked = false  }) => {
     const handleToggle = async () => {
         if (loading) return;
         setLoading(true);
-        console.log(drinkId)
         const endpoint = `/api/drinks/${drinkId}/${liked ? 'unlike' : 'like'}`;
         try {
             const res = await fetch(endpoint, {

@@ -30,7 +30,7 @@ const App = () => {
             <Navbar />
             <Toaster 
             position='top-center'
-            toastOptions={{ duration: 3000 }}
+            toastOptions={{ duration: 4000 }}
             />
             <div style={{ display: 'flex' }}>
                 <Sidebar />

@@ -46,8 +46,6 @@ const AllDrinks = () => {
         )
         : drinks)
     : null;
-    console.log("Filtered drinks:", filtered);
-
     return (
         <div>
             <h1>

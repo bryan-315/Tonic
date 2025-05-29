@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
+import toast from 'react-hot-toast';
 
 const CLOUD_NAME    = 'djijwros2';
 const UPLOAD_PRESET = 'tonic_unsigned';
@@ -11,14 +12,18 @@ const ImageUploader = ({ imageUrl, onUpload }) => {
         const data = new FormData();
         data.append('file', file);
         data.append('upload_preset', UPLOAD_PRESET);
-
-        const res  = await fetch(UPLOAD_URL, { method: 'POST', body: data });
-        const json = await res.json();
-        console.log('Upload response:', json);
-        if (!res.ok) {
-            throw new Error(json.error || 'Failed to upload image');
+        try {
+            const res = await fetch(UPLOAD_URL, { method: 'POST', body: data });
+            const json = await res.json();
+            if (!res.ok) {
+                toast.error(json.error?.message || 'Failed to upload image');
+                return;
+            }
+            onUpload(json.secure_url);
+        } catch (err) {
+            console.error('Upload error:', err);
+            toast.error(err.message || 'Network error uploading image');
         }
-        onUpload(json.secure_url);
     }, [onUpload]);
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({

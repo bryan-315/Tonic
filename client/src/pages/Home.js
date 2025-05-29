@@ -19,8 +19,8 @@ const Home = () => {
             <Link to="/all-drinks" className="card">Browse All Drinks</Link>
             {user && <>
                 <h3>Welcome, {user.username}</h3>
-                <Link to="/drinks/mine" className="card">My Drinks</Link>
-                <Link to="/drinks/liked" className="card">Liked Drinks</Link>
+                <Link to={`/user/${user._id}/drinks`} className="card">My Drinks</Link>
+                <Link to="/liked-drinks" className="card">Liked Drinks</Link>
                 </>}
             {!user && 
                 <Link to="/login" className="card">Log in to view your saved/created recipes</Link>
