@@ -48,11 +48,11 @@ const AllDrinks = () => {
     : null;
     return (
         <div>
-            <h1>
+            <h2>
                 {query
                 ? `Search results for “${query}”`
                 : "All Drinks"}
-            </h1>
+            </h2>
             <p>
                 {query && filtered
                 ? `Found ${filtered.length} drink${filtered.length !== 1 ? "s" : ""} matching “${query}”.`

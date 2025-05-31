@@ -65,7 +65,7 @@ const Login = () => {
     return (
         <>
         {!user && <div>
-            <h1>Login to Your Tonic Account</h1>
+            <h2>Login to Your Tonic Account</h2>
             <form onSubmit={handleLogin}>
             {error && <p style={{ color: 'red' }}>{error}</p>}
                 <input

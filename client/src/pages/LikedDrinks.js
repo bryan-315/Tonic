@@ -33,7 +33,7 @@ const LikedDrinks = () => {
     }, []);
     return (
         <div>
-            <h1>Your Liked Drinks</h1>
+            <h2>Your Liked Drinks</h2>
             
             {!drinks && !error && <Loading message="Loading all drinks..."/>}
             {error && <Error errormsg={error} />}

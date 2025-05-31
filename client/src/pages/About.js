@@ -4,7 +4,7 @@
 const About = () => {
     return (
         <div>
-            <h1>About Us</h1>
+            <h2>About Us</h2>
             <p>
                 This is a simple place to record any drink idea
                 you have — save it for yourself or share it so

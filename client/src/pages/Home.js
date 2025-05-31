@@ -10,7 +10,7 @@ const Home = () => {
     return (
         <main>
         <section className="hero">
-            <h1>Tonic Homepage</h1>
+            <h2>Tonic Homepage</h2>
             <h2>Discover or create some great drinks with other thirsty people.</h2>
             
         </section>

@@ -91,7 +91,7 @@ const EditDrink = () => {
     
         return (
         <>
-            <h1>Edit Drink Recipe</h1>
+            <h2>Edit Drink Recipe</h2>
             {user && !error ? <>
                 <DrinkForm
                 initialData={initialData}

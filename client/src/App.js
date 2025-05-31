@@ -8,7 +8,7 @@ import About from './pages/About';
 // Users
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import Profile from './pages/Profile';
+//import Profile from './pages/Profile';
 // Drinks
 import CreateDrink from './pages/CreateDrink';
 import DrinkPage from './pages/DrinkPage';
@@ -43,7 +43,6 @@ const App = () => {
                         {/* Users */}
                         <Route path='/login' element={<Login />} />
                         <Route path='/signup' element={<Signup />} />
-                        <Route path='/profile' element={<Profile />} />
                         {/* Drinks */}
                         <Route path='/create' element={<CreateDrink />} />
                         <Route path='/all-drinks' element={<AllDrinks />} />

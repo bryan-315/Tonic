@@ -43,7 +43,7 @@ const DrinkPage = () => {
             {error && <Error errormsg={error}/>}
             {drink && !error && 
                 <div>
-                    <h1>{drink.name}</h1>
+                    <h2>{drink.name}</h2>
                     {isOwner && <Link to={`/drinks/${drinkId}/edit`} className="btn btn-edit">
                         Edit Recipe
                     </Link>

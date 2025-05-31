@@ -40,7 +40,7 @@ const Navbar = () => {
     return (
         <nav className={styles.navbar}>
             <NavLink to="/" className={styles.logo}>
-                <h1>Tonic</h1>
+                <h1>tonic</h1>
             </NavLink>
             <div className={styles.searchGroup}>
                 <FaSearch
