@@ -1,18 +1,20 @@
-//import styles from './Footer.module.css';
+import { Link } from 'react-router-dom';
+
+import styles from '../styles/Footer.module.css'
 
 
 const Footer = () => (
-    <footer className={''}>
+    <footer className={styles.footer}>
         <p>© {new Date().getFullYear()} Tonic. All rights reserved.</p>
-        <p>
-            <a href="/">Home</a> •{' '}
-            <a href="/about">About</a> •{' '}
-            <a href="https://github.com/bryan-315/tonic" target="_blank" rel="noreferrer">
-            GitHub
-            </a>
-        </p>
-        <p className={''}>Built by Bryan</p>
-        </footer>
-    );
+        <div className={styles.footerLinks}>
+                <Link to="/" className={styles.link}>Home</Link> •{' '}
+                <Link to="/about" className={styles.link}>About</Link> •{' '}
+                <Link to="https://github.com/bryan-315/tonic" target="_blank" rel="noreferrer" className={styles.link}>
+                GitHub
+                </Link>
+        </div>
+        <p className={styles.builtBy}>Built by Bryan</p>
+    </footer>
+);
 
 export default Footer;

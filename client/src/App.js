@@ -36,7 +36,7 @@ const App = () => {
             />
             <div className={layout.container}>
                 <Navbar />
-                <main>
+                <main className={layout.mainContent}>
                     <Routes>
                         <Route path='/' element={<Home />} />
                         <Route path='/about' element={<About />} />

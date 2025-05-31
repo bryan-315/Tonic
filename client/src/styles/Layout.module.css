@@ -1,18 +1,23 @@
 
 /* Centers content & limits how wide it can grow */
 .container {
-    width: 90%;               /* fluid on small screens */
-    max-width: 1200px;        /* caps on large screens */
     margin-left: 40px;
-    padding: 1rem;
     transition: margin-left 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+
 }
 
 @media (max-width: 480px) {
     .container {
-    width: 95%;
-    padding: 0.5rem;
+        margin-left: 40px;
+        padding: 0.5rem;
     }
+}
+
+.mainContent {
+    flex: 1;
 }
 
 
@@ -29,7 +34,7 @@
     flex-direction: column;
 }
 
-/* Handy centering shortcut */
+/* Centering shortcut */
 .centerBoth {
     display: flex;  
     justify-content: center;
