@@ -1,0 +1,17 @@
+:root {
+    --bg-color:     #242425;  
+    --text-color:   #cdecf5;  
+    --accent-color: #2B5F6D;  
+}
+
+body {
+    margin: 0;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Chivo Mono', monospace;
+    
+}
+a {
+    color: var(--accent-color);
+    text-decoration: none;
+}

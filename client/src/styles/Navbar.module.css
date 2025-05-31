@@ -1,0 +1,100 @@
+/* Navbar.module.css */
+
+/* Root navbar container */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;  /* spread out items */
+    background-color: #1A1A1A;       /* darker shade of #242425 */
+    padding: 0 1rem;                 /* horizontal inset; adjust as needed */
+    height: 64px;                    /* default height; change here */
+}
+
+/* Title/logo */
+.logo {
+    font-size: 1.75rem;              /* large title; adjust here */
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+/* Search section */
+.searchGroup {
+    display: flex;
+    align-items: center;
+}
+
+.searchInput {
+    width: 300px;                    /* fixed width; adjust here */
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #444;
+    border-radius: 4px;              /* rounded corners; adjust here */
+    background-color: #2A2A2A;
+    color: var(--text-color);
+    font-size: 0.9rem;
+    margin-left: 0.5rem;
+    transition: border-color 0.2s;
+}
+.searchInput:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+.searchButton {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 1.1rem;
+    margin-left: 0.5rem;
+    cursor: pointer;
+}
+.searchButton:hover {
+    color: var(--accent-color);
+}
+
+/* Auth buttons container */
+.authGroup {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+/* Generic button style */
+.button {
+    padding: 0.5rem 1rem;
+    background-color: var(--accent-color);
+    color: var(--bg-color);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.2s;
+}
+.button:hover {
+    background-color: #3C7A85;        /* slightly lighter */
+}
+
+/* Generic button style */
+.createButton {
+    padding: 0.5rem 1rem;
+    background-color: var(--text-color);
+    color: var(--accent-color);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.2s;
+}
+.createButton:hover {
+    background-color: #54daf1;        /* slightly lighter */
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+.searchInput {
+    width: 180px;                 /* narrower on small screens */
+}
+.logo {
+    font-size: 1.5rem;
+}
+/* Collapse auth buttons into a dropdown or hide text if needed */
+}

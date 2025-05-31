@@ -1,55 +1,78 @@
-import { useState } from 'react';
+//import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { FaBars, FaTimes } from 'react-icons/fa';
+import { FaBars, FaTimes, FaHome } from 'react-icons/fa';
+
+import styles from '../styles/Sidebar.module.css'; 
 
 import { useAuth } from '../contexts/AuthContext';
+import { useSidebar } from '../contexts/SidebarContext';
 //import styles from './Sidebar.module.css'; // your future CSS module
 
 const Sidebar = ({ children }) => {
-    const [isOpen, setIsOpen] = useState(false);
+    //const [isOpen, setIsOpen] = useState(false);
+    const { isOpen, toggle } = useSidebar();
     const { user } = useAuth();
     
     return (
-        <div className={''}>
-        {/* Toggle button */}
-        <button
-            className={''}
-            onClick={() => setIsOpen(open => !open)}
-            aria-label={isOpen ? 'Close sidebar' : 'Open sidebar'}
-        >
-            {isOpen ? <FaTimes /> : <FaBars />}
-        </button>
-        
-        {/* Sidebar panel */}
-        <nav className={''}>
-            {/* In here you could map a list of RecipeCards or Links */}
-            <ul className={''}>
-                <li>
-                    <NavLink to="/" className="active">
+        <div className={`${styles.sidebar} ${isOpen ? styles.expanded : styles.collapsed}`}>
+            <button
+                className={styles.toggleBtn}
+                onClick={toggle}
+                aria-label={isOpen ? 'Close sidebar' : 'Open sidebar'}
+            >
+                {isOpen ? <FaTimes /> : <FaBars />}
+            </button>
+            
+            {isOpen && <nav className={styles.nav}>
+                {/* In here you could map a list of RecipeCards or Links */}
+                <ul className={styles.navList}>
+                    <li>
+                        <NavLink to="/"
+                        className={({ isActive }) =>
+                            `${styles.navLink} ${isActive ? styles.navLinkActive : ''}`
+                        }>
+                        <FaHome />
+                        { isOpen && <span className={isOpen ? styles.linkText : styles.linkTextHidden}>
                         Home
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink to="/all-drinks" className="active">
-                        All Drinks
-                    </NavLink>
-                </li>
-                {user && <>
-                    <li>
-                        <NavLink to={`/user/${  user._id}/drinks`} className="active">
-                            My Drinks
+                        </span>}
                         </NavLink>
                     </li>
-                    
                     <li>
-                        <NavLink to="/liked-drinks" className="active">
-                            Liked Drinks
+                        <NavLink to="/all-drinks" 
+                        className={({ isActive }) =>
+                            `${styles.navLink} ${isActive ? styles.navLinkActive : ''}`
+                        }>
+                            <span className={isOpen ? styles.linkText : styles.linkTextHidden}>
+                            All Drinks
+                            </span>
                         </NavLink>
                     </li>
-                </>}
-            </ul>
-            {children}
-        </nav>
+                    {user && <>
+                        <li>
+                            <NavLink to={`/user/${  user._id}/drinks`} 
+                            className={({ isActive }) =>
+                                `${styles.navLink} ${isActive ? styles.navLinkActive : ''}`
+                            }>
+                                <span className={isOpen ? styles.linkText : styles.linkTextHidden}>
+                                    My Drinks
+                                </span>
+                            </NavLink>
+                        </li>
+                        
+                        <li>
+                            <NavLink to="/liked-drinks" 
+                            className={({ isActive }) =>
+                                `${styles.navLink} ${isActive ? styles.navLinkActive : ''}`
+                            }>
+                                <span className={isOpen ? styles.linkText : styles.linkTextHidden}>
+                                    Liked Drinks
+                                </span>
+                            </NavLink>
+                        </li>
+                    </>}
+                </ul>
+                {children}
+            </nav>}
         </div>
     );
 };

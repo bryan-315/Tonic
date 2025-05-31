@@ -1,0 +1,93 @@
+/* Container for sidebar */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    background-color: var(--accent-color);
+    overflow: hidden;
+    transition: width 0.3s ease;
+}
+
+.expanded {
+    width: 150px;
+}
+
+.collapsed {
+    width: 40px;
+}
+
+/* Toggle button inside sidebar */
+.toggleBtn {
+    position: absolute;
+    top: 1rem;
+    right: 0.1rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: var(--accent-color);
+    border: none;
+    border-radius: 50%;
+    color: var(--text-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Navigation panel */
+.nav {
+    margin-top: 4rem;
+}
+
+/* List styling */
+.navList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.navListItem {
+    margin: 1rem 0;
+}
+
+/* Link styling */
+.navLink {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: background 0.2s ease;
+}
+
+.navLinkActive {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Text next to icon */
+.linkText {
+    margin-left: 0.75rem;
+    white-space: nowrap;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.linkTextHidden {
+    opacity: 0;
+}
+
+@media (max-width: 480px) {
+    .navListItem {
+      margin: 0.5rem 0;    /* tighter spacing */
+    }
+    .navLink {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;   /* slightly smaller text */
+    }
+    .toggleBtn {
+    top: 0.75rem;
+    right: 0.25rem;
+    width: 2rem;
+    height: 2rem;
+    }
+}

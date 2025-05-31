@@ -2,6 +2,8 @@ import React from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
+import styles from '../styles/Navbar.module.css';
+
 const LogoutButton = () => {
     const { setUser } = useAuth();
     const navigate = useNavigate();
@@ -17,7 +19,9 @@ const LogoutButton = () => {
     };
 
     return (
-        <button onClick={handleLogout}>
+        <button 
+        onClick={handleLogout}
+        className={styles.button}>
         Logout
         </button>
     );

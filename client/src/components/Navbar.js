@@ -4,10 +4,10 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 import { useAuth } from '../contexts/AuthContext';
-
-// CSS Imports
 import { NavLink } from 'react-router-dom';
-//import './Navbar.css'; // Optional: Add custom styles for your navbar
+
+// CSS Import
+import styles from '../styles/Navbar.module.css';
 
 // Component Imports
 import LogoutButton from './LogoutButton';
@@ -38,13 +38,14 @@ const Navbar = () => {
     }
 
     return (
-        <nav className="navbar">
-            <NavLink to="/">
+        <nav className={styles.navbar}>
+            <NavLink to="/" className={styles.logo}>
                 <h1>Tonic</h1>
             </NavLink>
-            <div>
+            <div className={styles.searchGroup}>
                 <FaSearch
                 onClick={handleSearch}
+                className={styles.seachButton}
                 />
                 <input
                 type="search"
@@ -52,24 +53,24 @@ const Navbar = () => {
                 onChange={handleInputChange}
                 onKeyDown={(e) => e.key === "Enter" && handleSearch()}
                 placeholder="Search For a Drink"
+                className={styles.searchInput}
                 />
             </div>
-            {user ? (
-            <>
-
-                <NavLink to="/create" className="btn btn-small">
-                Create Something
-                </NavLink>
-                <LogoutButton />
-            </>
-            ) : (
-            <>
-                <NavLink to="/login">Login</NavLink>
-                <NavLink to="/signup">Sign up</NavLink>
-            </>
-            )}
-
-
+            <div className={styles.authGroup}>
+                {user ? (
+                <>
+                    <NavLink to="/create" className={styles.createButton}>
+                    Create Something
+                    </NavLink>
+                    <LogoutButton />
+                </>
+                ) : (
+                <>
+                    <NavLink to="/login" className={styles.button}>Login</NavLink>
+                    <NavLink to="/signup" className={styles.button}>Sign up</NavLink>
+                </>
+                )}
+            </div>
         </nav>
     );
 };

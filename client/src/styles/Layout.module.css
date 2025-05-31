@@ -1,0 +1,37 @@
+
+/* Centers content & limits how wide it can grow */
+.container {
+    width: 90%;               /* fluid on small screens */
+    max-width: 1200px;        /* caps on large screens */
+    margin-left: 40px;
+    padding: 1rem;
+    transition: margin-left 0.3s ease;
+}
+
+@media (max-width: 480px) {
+    .container {
+    width: 95%;
+    padding: 0.5rem;
+    }
+}
+
+
+/* Simple flex helpers */
+.flex {
+    display: flex;
+}
+.flexRow {
+    display: flex;
+    flex-direction: row;
+}
+.flexCol {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Handy centering shortcut */
+.centerBoth {
+    display: flex;  
+    justify-content: center;
+    align-items: center;
+    }
