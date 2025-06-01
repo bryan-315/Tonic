@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useAuth } from "../contexts/AuthContext";
 import DrinkListField from './DrinkListField';
 import ImageUploader from './ImageUploader';
 import Error from '../components/Error';
@@ -10,6 +11,7 @@ const DrinkForm = ({ initialData, onSubmit, submitLabel = 'Save' }) => {
     const [formData, setFormData] = useState(initialData);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const { user } = useAuth();
     const navigate = useNavigate();
 
     // Reset formData if initialData changes (e.g. after fetch)
@@ -125,7 +127,7 @@ const DrinkForm = ({ initialData, onSubmit, submitLabel = 'Save' }) => {
             />
         </div>
 
-        <label style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
+        { user && user.username === "Tonic" && <label style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
             <input
             type="checkbox"
             name="isOfficial"
@@ -134,7 +136,7 @@ const DrinkForm = ({ initialData, onSubmit, submitLabel = 'Save' }) => {
             style={{ marginRight: '0.5rem' }}
             />
             Official Recipe?
-        </label>
+        </label> }
 
         <button
             type="submit"

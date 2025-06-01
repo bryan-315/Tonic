@@ -1,15 +1,16 @@
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 
 import SmallImg from "./SmallImg";
+import OfficialBadge from "./OfficialBadge";
 
 import styles from "../styles/DrinkCard.module.css";
 
 const DrinkCard = ({ drinkObj }) => {
-    const { _id, name, imageUrl, tags, createdBy, createdAt } = drinkObj;
+    const { _id, name, imageUrl, tags, createdBy, createdAt, isOfficial } = drinkObj;
     return (
         <Link to={`/drinks/${drinkObj._id}`} style={{ textDecoration: 'none' }}>
             <div className={styles.drinkCard}>
+                {isOfficial && <OfficialBadge />}
                 <SmallImg 
                 url={imageUrl || '/TonicPlaceholder.png'}
                 alt={name || 'Drink Image'}
