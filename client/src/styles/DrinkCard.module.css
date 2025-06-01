@@ -1,0 +1,54 @@
+/* Outer card wrapper */
+.drinkCard {
+    border: 1px solid var(--second-color); /* subtle colored border */
+    border-radius: 8px;
+    padding: 1rem;
+    background-color: var(--bg-color);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+    width: 100%;
+    max-width: 300px;                      /* ensures cards don’t get too wide */
+    box-sizing: border-box;
+}
+
+/* Hover effect: slight scale + border‐color shift */
+.drinkCard:hover {
+    transform: scale(1.02);
+    border-color: var(--third-color);
+}
+
+
+
+/* Drink name (larger & colored) */
+.name {
+    font-size: 1.25rem;
+    color: var(--second-color);
+    margin: 0.5rem 0;
+    text-align: center;
+}
+
+/* Metadata lines (smaller, neutral text) */
+.info {
+    font-size: 0.9rem;
+    color: var(--text-color);
+    margin: 0.25rem 0;
+    text-align: center;
+}
+
+/* Tags container (inline “pills” in one line) */
+.tags {
+    display: flex;
+    flex-wrap: wrap;       /* wrap if too many tags */
+    gap: 0.5rem;
+    justify-content: center;
+    margin-top: 0.75rem;
+    list-style: none;
+    padding: 0;
+}
+
+.tag {
+    background-color: var(--third-color);
+    color: var(--bg-color);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+}

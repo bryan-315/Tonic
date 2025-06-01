@@ -11,6 +11,9 @@ const createUser = async (req, res) => {
         if (!username || typeof username !== "string") {
             return res.status(400).json({ status: 400, message: "Invalid username." });
         }
+        if (username.toLowerCase().includes('tonic')) {
+            return res.status(400).json({ status: 400, message: "Invalid username" });
+        }
         if (!email || typeof email !== "string") {
             return res.status(400).json({ status: 400, message: "Invalid email." });
         }

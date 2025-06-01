@@ -1,7 +1,9 @@
 :root {
     --bg-color:     #242425;  
     --text-color:   #cdecf5;  
-    --accent-color: #2B5F6D;  
+    --accent-color: #2B5F6D;
+    --second-color: #4A6FB5;
+    --third-color:  #7AA2F7;
 }
 
 body {
@@ -14,4 +16,11 @@ body {
 a {
     color: var(--accent-color);
     text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+    font-family: inherit;
 }

@@ -1,0 +1,88 @@
+.fieldset {
+    border: 1px solid #444;
+    border-radius: 6px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    background-color: #1C1C1C;
+}
+
+/* Legend styling */
+.legend {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: var(--text-color);
+    margin-bottom: 0.75rem;
+    padding: 0 0.25rem;
+}
+
+/* Row container for each input + remove button */
+.itemRow {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+/* Input styling */
+.input {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid #444;
+    border-radius: 4px;
+    background-color: #2A2A2A;
+    color: var(--text-color);
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+.input::placeholder {
+    color: rgba(204, 194, 177, 0.6);
+}
+.input:focus {
+    outline: none;
+    background-color: #3A3A3A;
+}
+
+/* Remove button styling */
+.removeBtn {
+    margin-left: 0.5rem;
+    background-color: transparent;
+    border: none;
+    color: #E06C75;
+    font-size: 1.2rem;
+    line-height: 1;
+    cursor: pointer;
+}
+.removeBtn:hover {
+    color: #FF5C8D;
+}
+
+/* Add new item button */
+.addBtn {
+    display: inline-block;
+    margin-top: 0.75rem;
+    padding: 0.5rem 1rem;
+    background-color: var(--accent-color);
+    color: var(--bg-color);
+    border: none;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.addBtn:hover {
+    background-color: var(--third-color);
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .input {
+    font-size: 0.9rem;
+    }
+    .removeBtn {
+    font-size: 1rem;
+    }
+    .addBtn {
+    width: 100%; /* full width on mobile */
+    text-align: center;
+    }
+}
+  

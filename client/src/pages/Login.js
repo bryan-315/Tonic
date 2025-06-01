@@ -3,6 +3,8 @@ import { useAuth } from "../contexts/AuthContext";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import styles from "../styles/Auth.module.css";
+
 import LogoutButton from "../components/LogoutButton";
 
 const Login = () => {
@@ -63,40 +65,52 @@ const Login = () => {
         };
 
     return (
+        <div className={styles.authWrapper}>
+        {!user && 
         <>
-        {!user && <div>
-            <h2>Login to Your Tonic Account</h2>
-            <form onSubmit={handleLogin}>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-                <input
-                    type="email"
-                    name="email"
-                    value={input.email}
-                    onChange={handleInputChange}
-                    placeholder="Email"
-                    required
-                />
+            <h2 className={styles.authHeading}>Login to Your Tonic Account</h2>
+            <form onSubmit={handleLogin} className={styles.authForm}>
+            {error && <p className={styles.errorMsg}>{error}</p>}
+                <div className={styles.formRow}>
+                    <label htmlFor="email" className={styles.label}>Email</label>
+                    <input
+                        type="email"
+                        name="email"
+                        value={input.email}
+                        onChange={handleInputChange}
+                        required
+                        className={styles.input}
+                    />
+                </div>
+                <div className={styles.formRow}>
+                    <label htmlFor="password" className={styles.label}>Password</label>
                 <input
                     type="password"
                     name="password"
                     value={input.password}
                     onChange={handleInputChange}
-                    placeholder="Password"
                     required
+                    className={styles.input}
                 />
-                {!loading && <button type="submit">Log in</button>}
-                {loading && <button disabled>Loading...</button>}
-                
-            </form>
+                </div>
+                <button
+                type="submit"
+                className={styles.submitBtn}
+                disabled={loading}
+                >
+                    {loading ? "Logging in..." : "Log in"}
+                </button>
+                {/*{!loading && <button type="submit">Log in</button>}
+                {loading && <button disabled>Loading...</button>}*/}
             <p>Don't have an account? <Link to="/signup">Sign up</Link></p>
-        </div>}
+            </form>
+        </>}
         {user && <div>
-            <h1>You are logged in as: {user.name}!</h1>
+            <h1>You are logged in as: {user.username}!</h1>
             <LogoutButton />
             <Link to="/">Go to Home</Link>
         </div>}
-        </>
-
+        </div>
     );
 };
 

@@ -1,0 +1,30 @@
+.smallImg {
+    width: 100%;                         /* fill parent width */
+    max-width: 75px;                     /* default mobile size */
+    aspect-ratio: 1 / 1;                 /* maintain square aspect */
+    object-fit: cover;                   /* crop to fill */
+    display: block;
+    margin: 0 auto;                      /* center horizontally */
+    border: 1px solid var(--second-color);
+    border-radius: 8px;                  /* slightly rounded corners */
+    transition: border-radius 0.2s ease, border-color 0.2s ease;
+}
+
+.smallImg:hover {
+    border-radius: 0;                    /* square corners on hover */
+    border-color: var(--third-color);    /* change border color on hover */
+}
+
+/* Bump up image size on larger displays */
+@media (min-width: 768px) {
+    .smallImg {
+    max-width: 120px;
+    }
+}
+
+/* Ensure very small screens keep the default size or smaller */
+@media (max-width: 400px) {
+    .smallImg {
+    max-width: 60px;
+    }
+}

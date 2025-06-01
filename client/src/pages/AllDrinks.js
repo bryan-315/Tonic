@@ -5,6 +5,8 @@ import DrinkCard from "../components/DrinkCard";
 import Loading from "../components/Loading";
 import Error from "../components/Error";
 
+import styles from "../styles/ManyDrinkPage.module.css"
+
 const AllDrinks = () => {
     const [drinks, setDrinks] = useState(null);
     const [error, setError] = useState(null);
@@ -48,22 +50,24 @@ const AllDrinks = () => {
     : null;
     return (
         <div>
-            <h2>
-                {query
-                ? `Search results for “${query}”`
-                : "All Drinks"}
-            </h2>
-            <p>
-                {query && filtered
-                ? `Found ${filtered.length} drink${filtered.length !== 1 ? "s" : ""} matching “${query}”.`
-                : "This is ALL of the drinks in our records, sorted alphabetically."}
-            </p>
+            <div className={styles.header}>
+                <h2>
+                    {query
+                    ? `Search results for “${query}”`
+                    : "All Drinks"}
+                </h2>
+                <p>
+                    {query && filtered
+                    ? `Found ${filtered.length} drink${filtered.length !== 1 ? "s" : ""} matching “${query}”.`
+                    : "This is ALL of the drinks in our records, sorted alphabetically."}
+                </p>
+            </div>
 
             {!drinks && !error && <Loading message="Loading all drinks..." />}
             {error && <Error errormsg={error} />}
         
             {filtered && !error && (
-                <div className="drink-list">
+                <div className={styles.drinkList}>
                 {filtered.map(drink => (
                     <DrinkCard key={drink._id} drinkObj={drink} />
                 ))}

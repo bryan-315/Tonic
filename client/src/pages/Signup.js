@@ -3,6 +3,8 @@ import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
+import styles from "../styles/Auth.module.css"
+
 const Signup = () => {
     // States/Hooks
     const [input, setInput] = useState({
@@ -28,6 +30,7 @@ const Signup = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError("");
+        setLoading(true);
         const { username, email, password, confirmPassword } = input;
         // Basic validation
         if (!username || !email || !password || !confirmPassword) {
@@ -62,53 +65,74 @@ const Signup = () => {
         } catch (err) {
                 setError(err.message);
         }
+        finally {
+            setLoading(false);
+        }
     }
 
     return (
-        <div className="signup">
-            <h1>Create a new Tonic account</h1>
-            <form onSubmit={handleSubmit}>
-                <label>
-                Username
-                <input
-                    type="text"
-                    name="username"
-                    value={input.username}
-                    onChange={handleInputChange}
-                    required
-                />
-                </label>
-                <label>
-                Email
-                <input
-                    type="email"
-                    name="email"
-                    value={input.email}
-                    onChange={handleInputChange}
-                    required
-                />
-                </label>
-                <label>
-                Password
-                <input
-                    type="password"
-                    name="password"
-                    value={input.password}
-                    onChange={handleInputChange}
-                    required
-                />
-                </label>
-                <label>
-                Confirm Password
-                <input
-                    type="password"
-                    name="confirmPassword"
-                    value={input.confirmPassword}
-                    onChange={handleInputChange}
-                    required
-                />
-                </label>
-                <button type="submit">Sign up</button>
+        <div className={styles.authWrapper}>
+            <h2 className={styles.authHeading}>Create a new Tonic account</h2>
+            <form onSubmit={handleSubmit} className={styles.authForm}>
+                <div className={styles.formRow}>
+                    <label className={styles.label}>
+                    Username
+                    <input
+                        type="text"
+                        name="username"
+                        value={input.username}
+                        onChange={handleInputChange}
+                        required
+                        className={styles.input}
+                    />
+                    </label>
+                </div>
+                <div className={styles.formRow}>
+                    <label className={styles.label}>
+                    Email
+                    <input
+                        type="email"
+                        name="email"
+                        value={input.email}
+                        onChange={handleInputChange}
+                        required
+                        className={styles.input}
+                    />
+                    </label>
+                </div>
+                <div className={styles.formRow}>
+                    <label className={styles.label}>
+                    Password
+                    <input
+                        type="password"
+                        name="password"
+                        value={input.password}
+                        onChange={handleInputChange}
+                        required
+                        className={styles.input}
+                    />
+                    </label>
+                </div>
+                <div className={styles.formRow}>
+                    <label className={styles.label}>
+                    Confirm Password
+                    <input
+                        type="password"
+                        name="confirmPassword"
+                        value={input.confirmPassword}
+                        onChange={handleInputChange}
+                        required
+                        className={styles.input}
+                    />
+                    </label>
+                </div>
+                <button 
+                type="submit" 
+                className={styles.submitBtn}
+                disabled={loading}
+                >
+                    {loading ? "Signing up..." : "Sign up"}
+                </button>
             </form>
             <p>{message}</p>
         </div>

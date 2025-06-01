@@ -43,7 +43,7 @@ const Sidebar = ({ children }) => {
                             `${styles.navLink} ${isActive ? styles.navLinkActive : ''}`
                         }>
                             <span className={isOpen ? styles.linkText : styles.linkTextHidden}>
-                            All Drinks
+                            All Recipes
                             </span>
                         </NavLink>
                     </li>
@@ -54,7 +54,7 @@ const Sidebar = ({ children }) => {
                                 `${styles.navLink} ${isActive ? styles.navLinkActive : ''}`
                             }>
                                 <span className={isOpen ? styles.linkText : styles.linkTextHidden}>
-                                    My Drinks
+                                    My Recipes
                                 </span>
                             </NavLink>
                         </li>
@@ -65,7 +65,7 @@ const Sidebar = ({ children }) => {
                                 `${styles.navLink} ${isActive ? styles.navLinkActive : ''}`
                             }>
                                 <span className={isOpen ? styles.linkText : styles.linkTextHidden}>
-                                    Liked Drinks
+                                    Liked Recipes
                                 </span>
                             </NavLink>
                         </li>

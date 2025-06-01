@@ -4,6 +4,8 @@ import DrinkListField from './DrinkListField';
 import ImageUploader from './ImageUploader';
 import Error from '../components/Error';
 
+import styles from '../styles/DrinkForm.module.css';
+
 const DrinkForm = ({ initialData, onSubmit, submitLabel = 'Save' }) => {
     const [formData, setFormData] = useState(initialData);
     const [error, setError] = useState('');
@@ -38,21 +40,24 @@ const DrinkForm = ({ initialData, onSubmit, submitLabel = 'Save' }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit} style={{ maxWidth: 600, margin: '2rem auto' }}>
-        {error && <Error errormsg={error} />}
+        <form onSubmit={handleSubmit} className={styles.form}>
+        {error && <div>
+            <Error errormsg={error} className={styles.errorBanner} />
+        </div>}
 
-
-        <label style={{ display: 'block', marginBottom: '1rem' }}>
+        <div className={styles.field}>
+            <label className={styles.label} htmlFor="name">
             Name
+            </label>
             <input
             type="text"
             name="name"
             value={formData.name}
             onChange={handleChange}
             required
-            style={{ width: '100%', padding: '0.5rem', marginTop: '0.25rem' }}
+            className={styles.input}
             />
-        </label>
+        </div>
 
         <DrinkListField
             label="Tags"
@@ -65,28 +70,33 @@ const DrinkForm = ({ initialData, onSubmit, submitLabel = 'Save' }) => {
             imageUrl={formData.imageUrl}
             onUpload={url => setFormData(prev => ({ ...prev, imageUrl: url }))}
         />
-
-        <label style={{ display: 'block', marginBottom: '1rem' }}>
-            Glassware
+        <div className={styles.field}>
+            <label className={styles.label} htmlFor="glassware">
+                Glassware
+            </label>
+                <input
+                className={styles.input}
+                type="text"
+                name="glassware"
+                value={formData.glassware}
+                onChange={handleChange}
+                style={{ width: '100%', padding: '0.5rem', marginTop: '0.25rem' }}
+                />
+            
+        </div>
+        <div className={styles.field}>
+            <label className={styles.label} htmlFor="method">
+                Method
+            </label>
             <input
-            type="text"
-            name="glassware"
-            value={formData.glassware}
-            onChange={handleChange}
-            style={{ width: '100%', padding: '0.5rem', marginTop: '0.25rem' }}
-            />
-        </label>
-
-        <label style={{ display: 'block', marginBottom: '1rem' }}>
-            Method
-            <input
+            className={styles.input}
             type="text"
             name="method"
             value={formData.method}
             onChange={handleChange}
             style={{ width: '100%', padding: '0.5rem', marginTop: '0.25rem' }}
             />
-        </label>
+        </div>
 
         <DrinkListField
             label="Ingredients"
@@ -102,15 +112,18 @@ const DrinkForm = ({ initialData, onSubmit, submitLabel = 'Save' }) => {
             onChange={instructions => setFormData(prev => ({ ...prev, instructions }))}
         />
 
-        <label style={{ display: 'block', marginBottom: '1rem' }}>
+        <div className={styles.field}>
+        <label className={styles.label} htmlFor="description">
             Description
+        </label>
             <textarea
+            className={styles.textarea}
             name="description"
             value={formData.description}
             onChange={handleChange}
             style={{ width: '100%', padding: '0.5rem', marginTop: '0.25rem' }}
             />
-        </label>
+        </div>
 
         <label style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
             <input
@@ -126,7 +139,7 @@ const DrinkForm = ({ initialData, onSubmit, submitLabel = 'Save' }) => {
         <button
             type="submit"
             disabled={loading}
-            style={{ marginTop: '1rem', padding: '0.75rem 1.5rem' }}
+            className={styles.submitBtn}
         >
             {loading ? 'Saving…' : submitLabel}
         </button>
@@ -136,7 +149,8 @@ const DrinkForm = ({ initialData, onSubmit, submitLabel = 'Save' }) => {
             e.preventDefault(); 
             navigate(-1); 
             }}
-            style={{ fontSize: '0.75rem', textDecoration: 'underline', cursor: 'pointer' }}>
+            className={styles.cancelLink}
+            >
             Cancel
         </Link>
         </form>

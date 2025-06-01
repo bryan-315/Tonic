@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 import DrinkForm from '../components/DrinkForm';
+import styles from "../styles/FormPage.module.css";
 
 const blankData = {
     name: '',
@@ -55,18 +56,20 @@ const CreateDrink = () => {
 
 
     return (
-        <>
+        <div className={styles.pageWrapper}>
             {user ? <>
-            <h2>Create a New Drink</h2>
-            <DrinkForm
+                <h2 className={styles.pageHeading}>Create a New Drink</h2>
+                <DrinkForm
                 initialData={blankData}
                 onSubmit={handleCreate}
                 submitLabel="Post Drink"
-            />
+                />
             </> :
-            <p><Link to="/login">Log in</Link> to create a new recipe</p>
+            <p className={styles.authPrompt}>
+                <Link to="/login">Log in</Link> to create a new recipe
+            </p>
             }
-        </>
+        </div>
     );
 };
 

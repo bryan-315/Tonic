@@ -1,4 +1,4 @@
-
+import styles from '../styles/SmallImg.module.css';
 
 const SmallImg = ({ url, alt = '' }) => {
     // Expects a Cloudinary URL as a prop
@@ -12,14 +12,7 @@ const SmallImg = ({ url, alt = '' }) => {
             <img
             src={transformed}
             alt={alt}
-            style={{
-                width: '100%',        // responsive width
-                maxWidth: '75px',    // don't grow too large
-                aspectRatio: '1 / 1', // maintain square box
-                objectFit: 'cover',   // crop to fill
-                display: 'block',
-                margin: '0 auto',     // center
-            }}
+            className={styles.smallImg}
             />
         );
 };

@@ -10,19 +10,20 @@ import Error from '../components/Error';
 import DrinkForm from '../components/DrinkForm';
 import DeleteButton from '../components/DeleteButton';
 
-const CLOUD_NAME = 'djijwros2';
-const UPLOAD_PRESET = 'tonic_unsigned';
+import styles from "../styles/FormPage.module.css";
+
 
 const EditDrink = () => {
     const { drinkId } = useParams();
-    const { user }    = useAuth();
-    const navigate    = useNavigate();
+    const { user } = useAuth();
+    const navigate = useNavigate();
 
     const [initialData, setInitialData] = useState(null);
-    const [error,       setError]       = useState('');
+    const [error, setError] = useState('');
 
     // Fetch existing drink on mount
     useEffect(() => {
+        setError(false);
         const loadDrink = async () => {
             try {
             const res  = await fetch(`/api/drinks/${drinkId}`);
@@ -90,8 +91,9 @@ const EditDrink = () => {
         }
     
         return (
-        <>
-            <h2>Edit Drink Recipe</h2>
+        <div className={styles.pageWrapper}>
+            {error && <Error errormsg={error} />}
+            <h2 className={styles.pageHeading}>Edit Drink Recipe</h2>
             {user && !error ? <>
                 <DrinkForm
                 initialData={initialData}
@@ -99,8 +101,8 @@ const EditDrink = () => {
                 submitLabel="Update Drink" />
                 <DeleteButton drinkId={drinkId} redirectPath={`/user/${user._id}/drinks`} />
             </>
-            : <p>Please log in to edit recipes.</p>}
-        </>
+            : <p className={styles.authPrompt}>Please log in to edit recipes.</p>}
+        </div>
         );
         
 };

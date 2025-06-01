@@ -1,23 +1,22 @@
-// components/DynamicListField.jsx
-import React from 'react';
+import styles from '../styles/DrinkListField.module.css';
 
 const DrinkListField = ({ label, values, onChange, placeholder }) => {
     return (
-        <fieldset>
-        <legend>{label}</legend>
+        <fieldset className={styles.fieldset}>
+        <legend className={styles.legend}>{label}</legend>
 
         {/* Render one input row per value in the array */}
         {values.map((item, idx) => (
             <div
             key={idx}
-            style={{ display: 'flex', alignItems: 'center', marginBottom: '0.5rem' }}
+            className={styles.itemRow}
             >
             <input
                 type="text"
                 value={item}
                 placeholder={placeholder}
                 required={idx === 0}
-                style={{ flex: 1 }}
+                className={styles.input}
                 onChange={e => {
                 // Create a new array with the updated value at this index
                 const newValues = [...values];
@@ -35,7 +34,7 @@ const DrinkListField = ({ label, values, onChange, placeholder }) => {
                     const newValues = values.filter((_, i) => i !== idx);
                     onChange(newValues);
                 }}
-                style={{ marginLeft: '0.5rem' }}
+                className={styles.removeBtn}
                 >
                 ×
                 </button>
@@ -45,6 +44,7 @@ const DrinkListField = ({ label, values, onChange, placeholder }) => {
 
         {/* Button to add a new blank item */}
         <button
+        className={styles.addBtn}
             type="button"
             onClick={() => onChange([...values, ''])}
         >

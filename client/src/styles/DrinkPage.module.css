@@ -1,0 +1,133 @@
+/* Root wrapper for the page */
+.drinkPage {
+    padding: 1rem;
+}
+
+/* Title centered */
+.title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+}
+
+/* Edit button styling */
+.editButton {
+    display: inline-block;
+    background-color: var(--second-color);
+    color: var(--bg-color);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-bottom: 0.5rem;
+    text-decoration: none;
+}
+.editButton:hover {
+    background-color: var(--third-color);
+}
+
+/* Wrapper for LikeDiv or login prompt */
+.likeWrapper {
+    margin-bottom: 1.5rem;
+}
+
+/* Main content: details on left, image on right */
+.mainContent {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Details column */
+.details {
+    flex: 1 1 300px;    /* grow, shrink, basis */
+    max-width: 600px;
+}
+
+/* Image container */
+.imageContainer {
+    flex: 1 1 300px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+/* Section wrapper for consistent spacing */
+.section {
+    margin-bottom: 1.5rem;
+}
+
+/* Section headings */
+.section h2,
+.section h3 {
+    margin-bottom: 0.5rem;
+    color: var(--second-color);
+}
+.section h2 {
+    font-size: 1.5rem;
+}
+.section h3 {
+    font-size: 1.25rem;
+}
+
+/* Description box styling */
+.descriptionBox {
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+/* Tags rendered as pills */
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+.tag {
+    background-color: var(--third-color);
+    color: var(--bg-color);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+}
+
+/* Metadata at bottom (creator & date) */
+.metadata {
+    font-size: 0.9rem;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+}
+.metadata a {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+.metadata a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .title {
+    font-size: 2rem;
+    }
+    .editButton {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+    }
+    .mainContent {
+    flex-direction: column;
+    align-items: center;
+    }
+    .details {
+    max-width: 100%;
+    }
+    .imageContainer {
+    margin-bottom: 1rem;
+    }
+}

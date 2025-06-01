@@ -1,0 +1,61 @@
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: transparent;
+    border: 1px solid var(--second-color);
+    color: var(--text-color);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Hover effect when not disabled */
+.button:not(:disabled):hover {
+    background-color: rgba(74, 111, 181, 0.1); /* light second-color */
+    border-color: var(--third-color);
+}
+
+/* When the item is liked, use accent-color for text and border */
+.liked {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+}
+
+/* Icon styling */
+.icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+/* Count badge styling */
+.count {
+    background-color: var(--third-color);
+    color: var(--bg-color);
+    border-radius: 999px;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.8rem;
+}
+
+/* Adjust sizes on mobile */
+@media (max-width: 480px) {
+    .button {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+    }
+    .icon {
+    font-size: 1rem;
+    }
+    .count {
+    font-size: 0.75rem;
+    padding: 0.15rem 0.4rem;
+    }
+}

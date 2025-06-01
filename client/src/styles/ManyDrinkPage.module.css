@@ -1,0 +1,31 @@
+.header {
+    margin-bottom: 1.5rem;           /* space before the grid starts */
+    color: var(--text-color);
+    padding : 2rem;
+}
+
+.header h2 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+.header p {
+    margin: 0.5rem 0 0;
+    font-size: 1rem;
+}
+
+/* 2) Grid container for DrinkCard components */
+.drinkList {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* two columns on desktop/tablet */
+    gap: 1rem;                              /* horizontal & vertical gap */
+    justify-items: center;                  /* center cards in each column */
+    margin-bottom: 2rem;                    /* space before footer/next section */
+}
+
+/* 3) Collapse to a single column on narrow screens */
+@media (max-width: 600px) {
+    .drinkList {
+    grid-template-columns: 1fr;
+    }
+}

@@ -5,6 +5,8 @@ import DrinkCard from "../components/DrinkCard";
 import Loading from "../components/Loading";
 import Error from "../components/Error";
 
+import styles from "../styles/ManyDrinkPage.module.css";
+
 const UserCreations = () => {
     const [drinks, setDrinks] = useState(null);
     const [error, setError] = useState(null);
@@ -44,13 +46,17 @@ const UserCreations = () => {
             {!drinks && !error && <Loading message="Loading drinks..."/>}
             {error && <Error errormsg={error} />}
             {drinks && !error && (
-                <div className="drink-list">
-                    <h1>{drinksOwner}'s Creations</h1>
+                <>
+                    <div className={styles.header}>
+                        <h1>{drinksOwner}'s Creations</h1>
+                    </div>
+                    <div className={styles.drinkList}>
                     {drinks.map((drink) => (
                         <DrinkCard key={drink._id} drinkObj={drink} />
                         
                     ))}
-                </div>
+                    </div>
+                </>
             )}
         </div>
     );

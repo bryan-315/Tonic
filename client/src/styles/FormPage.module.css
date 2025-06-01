@@ -1,0 +1,49 @@
+
+.pageWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem;
+    background-color: var(--bg-color);
+    min-height: 100vh; /* ensure footer stays at bottom */
+    box-sizing: border-box;
+}
+
+/* Page heading styling */
+.pageHeading {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--text-color);
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+/* Prompt for authentication (login link) */
+.authPrompt {
+    font-size: 1rem;
+    color: var(--text-color);
+    text-align: center;
+}
+.authPrompt a {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+.authPrompt a:hover {
+    text-decoration: underline;
+}
+
+/* Delete button container spacing */
+.deleteBtnWrapper {
+    margin-top: 1rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .pageHeading {
+    font-size: 1.75rem;
+    }
+    .authPrompt {
+    font-size: 0.9rem;
+    }
+}
+  

@@ -2,6 +2,8 @@ import{ useState, useEffect } from 'react';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import { useAuth } from '../contexts/AuthContext';
 
+import styles from '../styles/LikeDiv.module.css';
+
 const LikeDiv = ({ drinkId, initialCount = 0, initialLiked = false  }) => {
     const [ liked, setLiked ] = useState(initialLiked);
     const [ count, setCount ] = useState(initialCount);
@@ -43,17 +45,22 @@ const LikeDiv = ({ drinkId, initialCount = 0, initialLiked = false  }) => {
     } 
 
     return (
-        <button onClick={handleToggle} disabled={loading} aria-pressed={liked}>
+        <button 
+        onClick={handleToggle} 
+        disabled={loading} 
+        aria-pressed={liked}
+        className={`${styles.button} ${liked ? styles.liked : ''}`}
+        >
             {liked ? <>
-            Remove from favorites
-            <FaHeart /> </>
+                <span>Remove from favorites</span>
+                <span className={styles.icon}><FaHeart /></span>
+            </>
             :
             <>
-            Add to favorites
-            <FaRegHeart />
+                <span>Add to favorites</span>
+                <span className={styles.icon}><FaRegHeart /></span>
             </>}
-            
-            {count}
+            <span className={styles.count}>{count}</span>
         </button>
     )
 }

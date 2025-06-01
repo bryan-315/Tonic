@@ -1,0 +1,103 @@
+/* Wrapper to add extra left padding so content isn’t too close to sidebar */
+.homeWrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding-left: 1rem;
+}
+
+/* Hero section: stacked headings on a colored background */
+.hero {
+    background-color: var(--second-color);
+    color: var(--text-color);
+    padding: 4.5rem 1rem;
+}
+.hero h2 {
+    margin: 0.5rem 0;
+    font-size: 2rem;
+    line-height: 1.2;
+}
+
+/* Quick Links: responsive grid of cards */
+.quickLinks {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    padding: 4rem 1rem;
+    margin-bottom: 2rem
+}
+
+.card {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 1.1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+    
+  /* Welcome heading for logged-in users */
+.welcome {
+    text-align: center;
+    font-size: 1.5rem;
+    margin: 1rem 0;
+    color: var(--text-color);
+}
+
+  /* Call-to-Action section: full-width colored band */
+.cta {
+    background-color: var(--third-color);
+    color: var(--text-color);
+    text-align: center;
+    padding: 4rem 1rem;
+}
+.cta h2 {
+    margin: 0 0 1rem;
+    font-size: 1.75rem;
+}
+
+.btnPrimary {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s, transform 0.2s;
+}
+.btnPrimary:hover {
+    background-color: rgba(204, 194, 177, 0.9);
+    transform: translateY(-2px);
+}
+
+  /* Responsive tweaks */
+@media (max-width: 600px) {
+    .hero h2 {
+        font-size: 1.5rem;
+    }
+    .card {
+        width: 100%;          /* make cards full-width on mobile */
+        text-align: center;
+    }
+    .welcome {
+        font-size: 1.25rem;
+    }
+    .cta h2 {
+        font-size: 1.5rem;
+    }
+    .btnPrimary {
+        width: 100%;          /* full-width button on mobile */
+        padding: 0.75rem;
+    }
+}
+
+

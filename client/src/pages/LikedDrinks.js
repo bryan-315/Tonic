@@ -5,6 +5,8 @@ import DrinkCard from "../components/DrinkCard";
 import Loading from "../components/Loading";
 import Error from "../components/Error";
 
+import styles from "../styles/ManyDrinkPage.module.css";
+
 const LikedDrinks = () => {
     const [drinks, setDrinks] = useState(null);
     const [error, setError] = useState(null);
@@ -33,15 +35,15 @@ const LikedDrinks = () => {
     }, []);
     return (
         <div>
-            <h2>Your Liked Drinks</h2>
-            
+            <div className={styles.header}>
+                <h2>Your Liked Drinks</h2>
+            </div>
             {!drinks && !error && <Loading message="Loading all drinks..."/>}
             {error && <Error errormsg={error} />}
             {drinks && !error && (
-                <div className="drink-list">
+                <div className={styles.drinkList}>
                     {drinks.map((drink) => (
                         <DrinkCard key={drink._id} drinkObj={drink} />
-                        
                     ))}
                 </div>
             )}

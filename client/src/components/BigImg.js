@@ -1,6 +1,4 @@
-// src/components/DrinkImage.js
-import React from 'react';
-
+import styles from '../styles/BigImg.module.css'
 
 const BigImg = ({ url, alt = '' }) => {
   // Expects a Cloudinary URL as a prop
@@ -14,14 +12,7 @@ const BigImg = ({ url, alt = '' }) => {
         <img
         src={transformed}
         alt={alt}
-        style={{
-            width: '100%', 
-            maxWidth: '250px',
-            aspectRatio: '1 / 1',
-            objectFit: 'cover', 
-            display: 'block',
-            margin: '0 auto',
-        }}
+        className={styles.bigImg}
         />
     );
 };
