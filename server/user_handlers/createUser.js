@@ -33,19 +33,28 @@ const createUser = async (req, res) => {
         const db = client.db('tonic'); 
         const users = db.collection("users");
 
-        const existingUser = await users.findOne({ email });
+        // Clean up text before checking
+        const cleanEmail = email.trim().toLowerCase();
+        const cleanUsername = username.trim();
+
+        //check email then check username
+        const existingUser = await users.findOne({ email: cleanEmail });
         if (existingUser) {
             return res.status(400).json({ status: 400, message: "User already exists" });
         }
+        const existingUserName = await users.findOne({ username: cleanUsername });
+        if (existingUserName) {
+            return res.status(400).json({ status: 400, message: "Username already taken" });
+        }
 
-        const cleanEmail = email.trim().toLowerCase();
-        const cleanUsername = username.trim();
+        //check is done now create pass
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const newUser = {
             username: cleanUsername,
             email: cleanEmail,
             password: hashedPassword,
+            likedDrinks: [],
         };
 
         const result = await users.insertOne(newUser);

@@ -16,7 +16,6 @@ const Signup = () => {
     const [error, setError] = useState("");
     const { user, setUser } = useAuth();
     const [loading, setLoading] = useState(false);
-    const [message, setMessage] = useState("");
     const navigate = useNavigate();
 
     // Functions
@@ -126,6 +125,7 @@ const Signup = () => {
                     />
                     </label>
                 </div>
+                {error && <p className={styles.errorMsg}>{error}</p>}
                 <button 
                 type="submit" 
                 className={styles.submitBtn}
@@ -134,7 +134,6 @@ const Signup = () => {
                     {loading ? "Signing up..." : "Sign up"}
                 </button>
             </form>
-            <p>{message}</p>
         </div>
     )
 };
