@@ -29,9 +29,9 @@ const Signup = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError("");
-        setLoading(true);
+        
         const { username, email, password, confirmPassword } = input;
-        // Basic validation
+        // Basic validation, no checking the db required yet.
         if (!username || !email || !password || !confirmPassword) {
             setError("All fields are required.");
             return;
@@ -40,6 +40,9 @@ const Signup = () => {
             setError("Passwords do not match.");
             return;
         }
+        //basic check done, now can connect to db and check for duplicates before creating account
+        //setLoading is done after under the basic validation so that the button does not get stuck if it fails
+        setLoading(true);
         try {
             const res = await fetch('/user/signup', {
                 method: 'POST',
