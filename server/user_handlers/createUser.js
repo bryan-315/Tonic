@@ -57,9 +57,10 @@ const createUser = async (req, res) => {
             likedDrinks: [],
         };
 
+        const { password: _, ...newUserWithoutPassword } = newUser;
         const result = await users.insertOne(newUser);
 
-        res.status(201).json({ status: 201, message: "User created successfully", user: { ...newUser, _id: result.insertedId } });
+        res.status(201).json({ status: 201, message: "User created successfully", user: { ...newUserWithoutPassword, _id: result.insertedId } });
     } catch (err) {
         console.error("Error during signup:", err);
         res.status(500).json({ status: 500, message: "Server error during signup." });
