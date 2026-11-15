@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 import Loading from '../components/Loading';
-import Error from '../components/Error';
+import ErrorMessage from '../components/Error';
 import DrinkForm from '../components/DrinkForm';
 import DeleteButton from '../components/DeleteButton';
 
@@ -84,7 +84,7 @@ const EditDrink = () => {
         return <p>Please log in to edit recipes.</p>;
         }
         if (error) {
-        return <Error errormsg={error} />;
+        return <ErrorMessage errormsg={error} />;
         }
         if (!initialData) {
         return <Loading message="Loading recipe..." />;
@@ -92,7 +92,7 @@ const EditDrink = () => {
     
         return (
         <div className={styles.pageWrapper}>
-            {error && <Error errormsg={error} />}
+            {error && <ErrorMessage errormsg={error} />}
             <h2 className={styles.pageHeading}>Edit Drink Recipe</h2>
             {user && !error ? <>
                 <DrinkForm
