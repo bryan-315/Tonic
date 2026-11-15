@@ -7,9 +7,6 @@ const getAllDrinks = async (req, res) => {
         console.log('in')
         const db = client.db('tonic');
         const drinks = await db.collection('drinks').find({}).toArray();
-        if (drinks.length === 0) {
-            return res.status(404).json({ status: 404, message: 'No drinks found' });
-        }
         return res.status(200).json({ status: 200, drinks });
     } catch (err) {
         console.error('Error connecting to the database', err);

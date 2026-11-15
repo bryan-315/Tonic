@@ -22,9 +22,6 @@ const getUserDrinks = async (req, res) => {
         .sort({ createdAt: -1 })
         .toArray();
 
-        if (drinks.length === 0) {
-        return res.status(404).json({ status: 404, message: 'No drinks found for this user' });
-        }
 
         return res.status(200).json({ status: 200, drinks });
     } catch (err) {

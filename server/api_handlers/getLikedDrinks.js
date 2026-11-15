@@ -25,22 +25,15 @@ const getLikedDrinks = async (req, res) => {
         // Check if the user has liked drinks
         if (!user.likedDrinks || user.likedDrinks.length === 0) {
         return res
-            .status(404)
-            .json({ status: 404, message: 'No liked drinks found' });
+            .status(200)
+            .json({ status: 200, message: 'No liked drinks found', drinks: [] });
         }
 
-        // Convert liked IDs to ObjectId and fetch those drinks
-        const likedIds = user.likedDrinks.map((id) => new ObjectId(id));
+        //fetch the liked drinks
         const drinks = await db
         .collection('drinks')
-        .find({ _id: { $in: likedIds } })
+        .find({ _id: { $in: user.likedDrinks } })
         .toArray();
-
-        if (drinks.length === 0) {
-        return res
-            .status(404)
-            .json({ status: 404, message: 'No liked drinks found' });
-        }
 
         return res.status(200).json({ status: 200, drinks });
     } catch (err) {
