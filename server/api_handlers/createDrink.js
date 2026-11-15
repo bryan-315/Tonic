@@ -21,7 +21,7 @@ const createDrink = async (req, res) => {
         if (!username || typeof username !== 'string') {
             return res.status(400).json({ status: 400, error: 'Invalid author name' });
         }
-        if (!name || typeof name !== 'string') {
+        if (typeof name !== 'string' || !name.trim()) {
             return res.status(400).json({ status: 400, error: 'Please add a name to the drink.' });
         }
         if (!tags || !Array.isArray(tags) || tags.length === 0) {

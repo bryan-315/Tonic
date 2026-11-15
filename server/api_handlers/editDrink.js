@@ -19,7 +19,8 @@ const editDrink = async (req, res) => {
         }
 
         // Validate all the fields
-        if (name && typeof name !== 'string') {
+        //name is optional when editing, only check it if one was sent
+        if (name !== undefined && (typeof name !== 'string' || !name.trim())) {
             return res.status(400).json({ status: 400, error: 'Invalid drink name' });
         }
         if (tags) {
