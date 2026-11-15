@@ -65,6 +65,7 @@ const AllDrinks = () => {
 
             {!drinks && !error && <Loading message="Loading all drinks..." />}
             {error && <Error errormsg={error} />}
+            {drinks && !error && drinks.length === 0 && <p className={styles.emptyMessage}>No drinks have been posted</p>}
         
             {filtered && !error && (
                 <div className={styles.drinkList}>

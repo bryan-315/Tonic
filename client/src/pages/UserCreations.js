@@ -30,7 +30,7 @@ const UserCreations = () => {
                     setDrinks([]);
                 } else {
                     setDrinks(data.drinks);
-                    setDrinksOwner(data.drinks[0].createdBy.name || 'Unknown User');
+                    setDrinksOwner(data.username);
                 }
             } catch (networkErr) {
                 // network‐level failure (DNS, offline, CORS, etc.)
@@ -50,6 +50,7 @@ const UserCreations = () => {
                     <div className={styles.header}>
                         <h1>{drinksOwner}'s Creations</h1>
                     </div>
+                    {drinks && drinks.length === 0 && <p className={styles.emptyMessage}>{drinksOwner} has no recipes yet</p>}
                     <div className={styles.drinkList}>
                     {drinks.map((drink) => (
                         <DrinkCard key={drink._id} drinkObj={drink} />

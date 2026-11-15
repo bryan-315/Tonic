@@ -29,3 +29,9 @@
     grid-template-columns: 1fr;
     }
 }
+
+/* Message shown when a list has no drinks */
+.emptyMessage {
+    padding: 0 2rem;  
+    text-align: center;
+}
