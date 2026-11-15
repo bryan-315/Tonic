@@ -57,9 +57,11 @@ const createUser = async (req, res) => {
             likedDrinks: [],
         };
 
+        //remove password before sending back to client
         const { password: _, ...newUserWithoutPassword } = newUser;
+        //add new user to db
         const result = await users.insertOne(newUser);
-
+        //send the info back to client
         res.status(201).json({ status: 201, message: "User created successfully", user: { ...newUserWithoutPassword, _id: result.insertedId } });
     } catch (err) {
         console.error("Error during signup:", err);

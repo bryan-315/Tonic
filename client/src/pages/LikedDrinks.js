@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
+import { Link } from "react-router-dom";
 
 import DrinkCard from "../components/DrinkCard";
 import Loading from "../components/Loading";
@@ -14,6 +15,8 @@ const LikedDrinks = () => {
     const { user } = useAuth();
     
     useEffect(() => {
+        //logged out: no user to look up so dont request to server
+        if (!user) return;
         const fetchDrinks = async () => {
             try {
                 const res = await fetch(`/api/user/${user._id}/liked`);
@@ -32,7 +35,13 @@ const LikedDrinks = () => {
             }
         };
         fetchDrinks();
-    }, []);
+    }, [user]);
+
+    //show to client that is not logged in
+    if (!user) {
+        return <p className={styles.emptyMessage}><Link to="/login">Log in</Link> to see your liked drinks.</p>;
+    }
+
     return (
         <div>
             <div className={styles.header}>
