@@ -24,30 +24,20 @@ const createDrink = async (req, res) => {
         if (typeof name !== 'string' || !name.trim()) {
             return res.status(400).json({ status: 400, error: 'Please add a name to the drink.' });
         }
-        if (!tags || !Array.isArray(tags) || tags.length === 0) {
-            return res.status(400).json({ status: 400, error: 'Please add tags to the drink so that it can be more easily searched for.' });
+        
+        //validate tags
+        if (!Array.isArray(tags) || tags.length === 0 || tags.some(tag => typeof tag !== 'string')) {
+            return res.status(400).json({ status: 400, error: 'Invalid tags' });
         }
-        tags.forEach(tag => {
-            if (typeof tag !== 'string') {
-                return res.status(400).json({ status: 400, error: 'Tag must be a string' });
-            }
-        })
-        if (!ingredients || !Array.isArray(ingredients) || ingredients.length === 0) {
-            return res.status(400).json({ status: 400, error: 'Invalid ingredients' });
+
+        //validate ingredients
+        if (!Array.isArray(ingredients) || ingredients.length === 0 || ingredients.some(i => typeof i !== 'string')) {
+                return res.status(400).json({ status: 400, error: 'Ingredients must be a non-empty array of strings' });
         }
-        ingredients.forEach(ingredient => {
-            if (typeof ingredient !== 'string') {
-                return res.status(400).json({ status: 400, error: 'Ingredient must be a string' });
-            }
-        })
-        if (!instructions || !Array.isArray(instructions) || instructions.length === 0) {
-            return res.status(400).json({ status: 400, error: 'Invalid instructions' });
+        //validate instructions
+        if (!Array.isArray(instructions) || instructions.length === 0 || instructions.some(i => typeof i !== 'string')) {
+                return res.status(400).json({ status: 400, error: 'Instructions must be a non-empty array of strings' });
         }
-        instructions.forEach(instruction => {
-            if (typeof instruction !== 'string') {
-                return res.status(400).json({ status: 400, error: 'Instruction must be a string' });
-            }
-        })
 
         // Optional fields
         if (imageUrl && (typeof imageUrl !== 'string' || !imageUrl.startsWith('http'))) {
