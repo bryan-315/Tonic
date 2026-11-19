@@ -1,12 +1,10 @@
-const { client } = require('../db');
+// Shared database connection, opened once when the server starts (see db.js)
+const { db } = require('../db');
 const { ObjectId } = require('mongodb');
 const bcrypt = require('bcrypt');
 
 const editDrink = async (req, res) => {
     try {
-        await client.connect();
-        console.log('in')
-        const db = client.db('tonic');
         const drinks = db.collection('drinks');
         const { drinkId } = req.params;
         const { authorId, name, tags, imageUrl, glassware, method, ingredients, instructions, description } = req.body;
@@ -96,9 +94,6 @@ const editDrink = async (req, res) => {
             status: 500,
             error: 'Internal server error',
         });
-    } finally {
-        await client.close();
-        console.log('out')
     }
 }
 

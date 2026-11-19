@@ -40,16 +40,19 @@ Totals are always **calculated**, never typed in by hand.
 **Story:** As a user, I want pages to load without random "Internal server error" messages, so the app feels dependable.
 
 Done when:
-- [ ] Two requests at the same time never break each other
-- [ ] The server connects to MongoDB once, when it starts
-- [ ] If the database can't be reached at startup, the server says so clearly
+- [x] Two requests at the same time never break each other
+- [x] The server connects to MongoDB once, when it starts
+- [x] If the database can't be reached at startup, the server says so clearly
 
-Tasks:
-- [ ] Connect once at startup (`db.js` / `server.js`)
-- [ ] Remove `client.connect()` / `client.close()` from every handler
-- [ ] Remove the `'in'` / `'out'` console logs
+Tasks (plan approved in chat, 2026-11-19):
+- [x] `db.js`: add `connectToDb()` (connect once + ping) and export a shared `db`
+- [x] `server.js`: connect first, then `listen`; if it fails, print a clear message and exit
+- [x] All 13 handlers: import `db`, remove `client.connect()` / `client.close()` / `finally` and the `'in'` / `'out'` logs (`getIngredients.js` never connected at all)
+- [x] Close the connection politely on Ctrl+C
+- [x] Leave `batchimport.js` alone (one-off script; removed in Feature 2)
+- [x] Test: fire ~10 requests at once, none should fail
 
-**Open question:** `main` and this branch share the same database. Should this branch use a separate database name (e.g. `tonic-dev`)?
+**Decided:** keep using the `tonic` database on this branch (it only has test data).
 
 ---
 

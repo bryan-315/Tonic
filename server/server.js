@@ -4,6 +4,7 @@
 const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
+const { connectToDb, closeDb } = require("./db");
 // import the handlers
 
 // Api
@@ -84,4 +85,28 @@ App.use((req, res) => {
     });
 });
 
-App.listen(8000, () => console.log(`Listening on port 8000`));
+// Start-up order matters:
+// 1. connect to the database once
+// 2. only then start accepting requests
+// That way no request ever arrives before the database is ready.
+const startServer = async () => {
+    try {
+        await connectToDb();
+    } catch (err) {
+        // No database = the API can't do anything useful, so stop with a clear message
+        // instead of starting a server where every request fails.
+        console.error("Could not connect to MongoDB:", err.message);
+        process.exit(1);
+    }
+
+    App.listen(8000, () => console.log(`Listening on port 8000`));
+};
+
+startServer();
+
+// Ctrl+C sends a "SIGINT" signal to the process.
+// Catch it to close the database connection politely before exiting.
+process.on("SIGINT", async () => {
+    await closeDb();
+    process.exit(0);
+});

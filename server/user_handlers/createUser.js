@@ -1,4 +1,5 @@
-const { client } = require("../db");
+// Shared database connection, opened once when the server starts (see db.js)
+const { db } = require("../db");
 const { ObjectId } = require("mongodb");
 const bcrypt = require("bcrypt");
 
@@ -28,9 +29,6 @@ const createUser = async (req, res) => {
         }
 
         // Check if user already exists
-        await client.connect();
-        console.log('in');
-        const db = client.db('tonic'); 
         const users = db.collection("users");
 
         // Clean up text before checking
@@ -66,9 +64,6 @@ const createUser = async (req, res) => {
     } catch (err) {
         console.error("Error during signup:", err);
         res.status(500).json({ status: 500, message: "Server error during signup." });
-    } finally {
-        await client.close();
-        console.log('out');
     }
 }
 

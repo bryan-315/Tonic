@@ -1,14 +1,11 @@
-const { client } = require("../db")
+// Shared database connection, opened once when the server starts (see db.js)
+const { db } = require("../db")
 const { ObjectId } = require('mongodb');
 
 
 
 const createDrink = async (req, res) => {
     try{
-        await client.connect();
-        console.log('in')
-        const db = client.db('tonic');
-
         const { authorId, username, name,  tags, imageUrl, glassware, method, ingredients, instructions, description, isOfficial } = req.body;
         
         // Check all fields
@@ -75,9 +72,6 @@ const createDrink = async (req, res) => {
     } catch (err) {
         console.error('Error connecting to the database', err);
         return res.status(500).json({ error: 'Internal server error' });
-    } finally {
-        await client.close();
-        console.log('out')
     }
 }
 

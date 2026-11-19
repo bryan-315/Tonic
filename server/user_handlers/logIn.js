@@ -1,4 +1,5 @@
-const { client } = require('../db');
+// Shared database connection, opened once when the server starts (see db.js)
+const { db } = require('../db');
 const bcrypt = require('bcrypt');
 
 const logIn = async (req, res) => {
@@ -11,10 +12,6 @@ const logIn = async (req, res) => {
         if (!password || typeof password !== 'string') {
             return res.status(400).json({ status: 400, message: 'Invalid password.' });
         }
-        // Connect to the database
-        await client.connect();
-        console.log('in');
-        const db = client.db('tonic');
         const users = db.collection('users');
         // Check if user exists
         cleanEmail = email.trim().toLowerCase();
@@ -34,9 +31,6 @@ const logIn = async (req, res) => {
     } catch (err) {
         console.error('Login error:', err);
         res.status(500).json({ status: 500, message: 'Server error during login.' });
-    } finally {
-        await client.close();
-        console.log('out');
     }
 }
 
