@@ -5,6 +5,7 @@ const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
 const { connectToDb, closeDb } = require("./db");
+const { requireAuth } = require("./auth");
 // import the handlers
 
 // Api
@@ -29,6 +30,7 @@ const {
 const {
     createUser,
     logIn,
+    getMe,
 } = require("./user_handlers/user_handlers.js");
 
 const App = express();
@@ -77,6 +79,10 @@ App.delete("/api/drinks/:drinkId", deleteDrink);
 App.post("/user/signup", createUser);
 App.post("/user/login", logIn);
 
+// Protected routes: requireAuth runs first and checks the login token.
+// Only if it's valid does the handler run, with req.userId set from the token.
+App.get("/api/me", requireAuth, getMe);
+
 // Catch all endpoint
 App.use((req, res) => {
     res.status(404).json({
@@ -90,6 +96,12 @@ App.use((req, res) => {
 // 2. only then start accepting requests
 // That way no request ever arrives before the database is ready.
 const startServer = async () => {
+    // Without a secret, login tokens can't be signed or checked, so stop right away
+    if (!process.env.JWT_SECRET) {
+        console.error("Missing JWT_SECRET in server/.env. Add a line like: JWT_SECRET=<long random text>");
+        process.exit(1);
+    }
+
     try {
         await connectToDb();
     } catch (err) {

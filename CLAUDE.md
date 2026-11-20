@@ -66,6 +66,12 @@ The client proxies `/api` and `/user` requests to port 8000.
 - Passwords never leave the server. Strip them from any user object before sending it.
 - Empty results are not errors: return `200` with an empty array, not `404`. Use `404` only when the thing asked for doesn't exist (e.g. a user ID).
 - IDs from the URL or request body are strings and need `new ObjectId(id)`. IDs read out of the database are already `ObjectId`s.
+- Routes that need a login use the `requireAuth` middleware (`server/auth.js`) and get the user from `req.userId`. Never trust a user ID from `req.body` or the URL for permissions.
+- Owned things (ingredients, recipes, diary) store `ownerId`; edit/delete must check `ownerId` equals `req.userId` (answer `403` if not).
+
+**Login (client)**
+- Requests that need a login use `authFetch` from `useAuth()` instead of `fetch`. It adds the token and handles expired logins.
+- Log in and out with `login(user, token)` / `logout()` from `useAuth()`, not `setUser`.
 
 **Client**
 - Phone first: style for a narrow phone screen first, then add `@media (min-width: ...)` rules for bigger screens. Buttons and inputs must be easy to tap.

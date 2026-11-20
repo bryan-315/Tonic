@@ -14,7 +14,7 @@ const Signup = () => {
         confirmPassword: ""
     });
     const [error, setError] = useState("");
-    const { user, setUser } = useAuth();
+    const { login } = useAuth();
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
@@ -58,8 +58,8 @@ const Signup = () => {
                 throw new Error(data.message || 'Signup failed');
                 }
                 
-                // Successful signup
-                setUser(data.user);
+                // Successful signup: save the user AND their login token
+                login(data.user, data.token);
                 // Show success message
                 toast.success("Account created successfully!");
                 // Redirect to home page

@@ -56,7 +56,32 @@ Tasks (plan approved in chat, 2026-11-19):
 
 ---
 
-## 2. Ingredients
+## 2. Real login (security)
+
+Moved before Ingredients (2026-11-19) so every new route is built with real login from day one, instead of being redone later.
+
+**Story:** As a user, I want only me to be able to see my diary and change my ingredients and recipes.
+
+Done when:
+- [x] The server can tell who is making a request from a signed token, without trusting a user ID sent by the browser
+- [ ] Creating, editing and deleting require a valid login (each new route in Features 3+ uses `requireAuth`)
+- [ ] Trying to change someone else's things is refused (each new route checks `ownerId === req.userId`)
+- [x] When my login expires, I'm logged out with a clear message
+
+Tasks (built 2026-11-20):
+- [x] Server: add `jsonwebtoken`; `JWT_SECRET` in `.env` (owner adds it; server refuses to start without it)
+- [x] Server: login and signup return `{ user, token }` (token lasts 30 days)
+- [x] Server: `requireAuth` middleware (`server/auth.js`): reads `Authorization: Bearer <token>`, sets `req.userId`, else `401`
+- [x] Server: `GET /api/me` returns the logged-in user (used to check the token on app load)
+- [x] Server: fix `cleanEmail` missing `const` in `logIn.js`
+- [x] Client: AuthContext stores the token next to the user, with `login()` / `logout()`
+- [x] Client: `authFetch()` (from `useAuth()`) adds the token to requests; on `401` it logs out with a toast
+- [x] Client: Login/Signup use the new response; fix Login's `setLoading` before validation
+- [x] Old drink routes stay as they are (they're replaced in Feature 4)
+
+---
+
+## 3. Ingredients
 
 **Story 2.1:** As a user, I want to create my own ingredients with their macros, using whatever amount is on the label, so I never have to look them up again.
 
@@ -95,7 +120,7 @@ Tasks:
 
 ---
 
-## 3. Recipes built from ingredients
+## 4. Recipes built from ingredients
 
 **Story 3.1:** As a user, I want to build a recipe from my saved ingredients and amounts, so I can see its total calories and protein.
 
@@ -131,26 +156,6 @@ Tasks:
 - [ ] A shared function that calculates macros (used by recipes and the diary)
 - [ ] Decide what happens to a recipe when one of its ingredients is deleted
 - [ ] Remove likes for now (`likedDrinks`, like/unlike routes, Liked page); social comes back in Feature 6
-
----
-
-## 4. Real login (security)
-
-Needed before the diary, because a diary is private.
-
-**Story:** As a user, I want only me to be able to see my diary and change my ingredients and recipes.
-
-Done when:
-- [ ] The server no longer trusts a user ID sent by the browser
-- [ ] Creating, editing and deleting require a valid login
-- [ ] Trying to change someone else's things is refused
-
-Tasks:
-- [ ] Give the user a login token (JWT) on login and signup
-- [ ] Send the token with requests that need a login
-- [ ] Server middleware that checks the token and finds the user
-- [ ] Use the token's user instead of `authorId` from the request body
-- [ ] Handle expired tokens (log the user out with a message)
 
 ---
 
@@ -205,7 +210,6 @@ Done when:
 
 - [ ] Rename `Error` component imports to `ErrorMessage` in every file
 - [ ] Remove unused imports (e.g. `bcrypt` in `editDrink.js`)
-- [ ] Declare `cleanEmail` with `const` in `logIn.js`
 - [ ] Check that every `useEffect` lists what it uses
 - [ ] Decide whether to keep blocking "tonic" in usernames
 

@@ -5,14 +5,13 @@ import { useNavigate } from 'react-router-dom';
 import styles from '../styles/Navbar.module.css';
 
 const LogoutButton = () => {
-    const { setUser } = useAuth();
+    const { logout } = useAuth();
     const navigate = useNavigate();
 
     const handleLogout = () => {
-        // Clear user from context (and localStorage via AuthProvider)
-        setUser(null);
-        // Optionally, call backend logout endpoint to clear server-side session/cookie:
-        // fetch('/api/logout', { method: 'POST', credentials: 'include' });
+        // Forget the user and the login token (AuthProvider also clears localStorage).
+        // No server call needed: with JWT the server doesn't keep a list of logged-in users.
+        logout();
 
         // Redirect to home or login page
         navigate('/');

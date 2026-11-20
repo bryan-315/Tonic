@@ -1,6 +1,7 @@
 // Shared database connection, opened once when the server starts (see db.js)
 const { db } = require('../db');
 const bcrypt = require('bcrypt');
+const { createToken } = require('../auth');
 
 const logIn = async (req, res) => {
     try {
@@ -14,7 +15,8 @@ const logIn = async (req, res) => {
         }
         const users = db.collection('users');
         // Check if user exists
-        cleanEmail = email.trim().toLowerCase();
+        // `const` matters: without it, cleanEmail becomes a global variable shared by every request
+        const cleanEmail = email.trim().toLowerCase();
         const user = await users.findOne({ email: cleanEmail });
         if (!user) {
             return res.status(400).json({ status: 400, message: 'User not found.' });
@@ -26,8 +28,10 @@ const logIn = async (req, res) => {
         }
         // Remove password from user object before sending response
         const { password: _, ...userWithoutPassword } = user;
-        // Send response
-        res.status(200).json({ status: 200, data: userWithoutPassword, message: 'Login successful' });
+        // Give the user their login token ("membership card"); the website sends it back on future requests
+        const token = createToken(user._id);
+        // Send response (same shape as signup: { user, token })
+        res.status(200).json({ status: 200, user: userWithoutPassword, token, message: 'Login successful' });
     } catch (err) {
         console.error('Login error:', err);
         res.status(500).json({ status: 500, message: 'Server error during login.' });

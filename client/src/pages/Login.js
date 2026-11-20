@@ -17,7 +17,7 @@ const Login = () => {
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
     const navigate = useNavigate();
-    const { user, setUser } = useAuth();
+    const { user, login } = useAuth();
 
     // Functions
     const handleInputChange = (e) => {
@@ -29,7 +29,6 @@ const Login = () => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        setLoading(true);
         setError("");
         const { email, password } = input;
         // Basic validation
@@ -37,6 +36,9 @@ const Login = () => {
             setError("All fields are required.");
             return;
         }
+        // setLoading goes AFTER validation: if validation fails and returns early,
+        // the button would otherwise be stuck on "Logging in..." forever (same fix as Signup)
+        setLoading(true);
         try {
             const res = await fetch('/user/login', {
                 method: 'POST',
@@ -52,9 +54,9 @@ const Login = () => {
                 setError(data.message || 'Login failed');
                 throw new Error(data.message || 'Login failed');
             }
-            // Successful login
+            // Successful login: save the user AND their login token
             setLoading(false);
-            setUser(data.data);
+            login(data.user, data.token);
             navigate('/');
         } catch (err) {
             setLoading(false);

@@ -2,9 +2,11 @@
 
 const createUser = require("./createUser.js");
 const logIn = require("./logIn.js");
+const getMe = require("./getMe.js");
 
 
 module.exports = {
     createUser,
-    logIn
+    logIn,
+    getMe
 }

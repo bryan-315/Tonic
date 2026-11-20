@@ -2,6 +2,7 @@
 const { db } = require("../db");
 const { ObjectId } = require("mongodb");
 const bcrypt = require("bcrypt");
+const { createToken } = require("../auth");
 
 const createUser = async (req, res) => {
     
@@ -59,8 +60,10 @@ const createUser = async (req, res) => {
         const { password: _, ...newUserWithoutPassword } = newUser;
         //add new user to db
         const result = await users.insertOne(newUser);
-        //send the info back to client
-        res.status(201).json({ status: 201, message: "User created successfully", user: { ...newUserWithoutPassword, _id: result.insertedId } });
+        // A new account is logged in right away, so it gets a login token too
+        const token = createToken(result.insertedId);
+        //send the info back to client (same shape as login: { user, token })
+        res.status(201).json({ status: 201, message: "User created successfully", user: { ...newUserWithoutPassword, _id: result.insertedId }, token });
     } catch (err) {
         console.error("Error during signup:", err);
         res.status(500).json({ status: 500, message: "Server error during signup." });
