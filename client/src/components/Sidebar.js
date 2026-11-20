@@ -49,6 +49,16 @@ const Sidebar = ({ children }) => {
                     </li>
                     {user && <>
                         <li>
+                            <NavLink to="/ingredients"
+                            className={({ isActive }) =>
+                                `${styles.navLink} ${isActive ? styles.navLinkActive : ''}`
+                            }>
+                                <span className={isOpen ? styles.linkText : styles.linkTextHidden}>
+                                    My Ingredients
+                                </span>
+                            </NavLink>
+                        </li>
+                        <li>
                             <NavLink to={`/user/${  user._id}/drinks`} 
                             className={({ isActive }) =>
                                 `${styles.navLink} ${isActive ? styles.navLinkActive : ''}`

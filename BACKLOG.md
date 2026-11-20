@@ -86,37 +86,38 @@ Tasks (built 2026-11-20):
 **Story 2.1:** As a user, I want to create my own ingredients with their macros, using whatever amount is on the label, so I never have to look them up again.
 
 Done when:
-- [ ] I can create an ingredient: name, serving, calories, protein, carbs, fat
-- [ ] The serving has at least one `{ amount, unit }`, e.g. `1 scoop`
-- [ ] I can add more units for the same serving ("+ add unit"), e.g. `1 scoop` = `30 g` = `2 tbsp`
-- [ ] Units are typed by me (scoop, g, ml, cup, slice...) and can't repeat within one ingredient
-- [ ] Only calories are required; protein, carbs and fat are optional (so beginners can start with just calories)
-- [ ] A blank optional macro counts as 0 in totals
-- [ ] Amounts must be more than 0; macros can't be negative
+- [x] I can create an ingredient: name, serving, calories, protein, carbs, fat
+- [x] The serving has at least one `{ amount, unit }`, e.g. `1 scoop`
+- [x] I can add more units for the same serving ("+ add unit"), e.g. `1 scoop` = `30 g` = `2 tbsp`
+- [x] Units are typed by me (scoop, g, ml, cup, slice...) and can't repeat within one ingredient
+- [x] Only calories are required; protein, carbs and fat are optional (so beginners can start with just calories)
+- [ ] A blank optional macro counts as 0 in totals (totals arrive with recipes, Feature 4)
+- [x] Amounts must be more than 0; macros can't be negative (no upper limit)
+- [x] Ingredient names are unique per user, ignoring capitals (different users can share names)
 
 **Story 2.2:** As a user, I want to add an extra unit to an ingredient later (e.g. I bought a scale and now know a scoop is 30 g), so I'm not stuck with the first unit I picked.
 
 Done when:
-- [ ] Editing an ingredient lets me add or remove units
-- [ ] I can't remove a unit that a recipe still uses (or I get a clear warning)
+- [x] Editing an ingredient lets me add or remove units
+- [ ] I can't remove a unit that a recipe still uses (or I get a clear warning) (Feature 4)
 
 **Story 2.3:** As a user, I want to choose what happens to my recipes when I delete an ingredient they use.
 
 Done when:
-- [ ] If no recipe uses it: a simple "Delete Whey?" confirm
-- [ ] If recipes use it, I'm asked: "Whey is used in 2 recipes (Shake, Pancakes)." **[Delete from recipes too] [Keep it in recipes] [Cancel]**
-- [ ] "Delete from recipes too" removes it everywhere (those recipes' totals change)
-- [ ] "Keep it in recipes" hides it from my ingredient list, but recipes still show it and count its macros; it just can't be opened or edited
-- [ ] "Keep" is done with a **soft delete** (`deleted: true`), not a real delete
-- [ ] I can see a list of my ingredients
-- [ ] I can edit and delete my ingredients
+- [x] If no recipe uses it: a simple "Delete Whey?" confirm
+- [ ] If recipes use it, I'm asked: "Whey is used in 2 recipes (Shake, Pancakes)." **[Delete from recipes too] [Keep it in recipes] [Cancel]** (Feature 4)
+- [ ] "Delete from recipes too" removes it everywhere (those recipes' totals change) (Feature 4)
+- [ ] "Keep it in recipes" hides it from my ingredient list, but recipes still show it and count its macros; it just can't be opened or edited (Feature 4)
+- [ ] "Keep" is done with a **soft delete** (`deleted: true`), not a real delete (Feature 4)
+- [x] I can see a list of my ingredients
+- [x] I can edit and delete my ingredients
 
-Tasks:
-- [ ] Server: `ingredients` collection (replaces the old cocktail ingredients collection)
-- [ ] Server: create / list / edit / delete routes, with validation
-- [ ] Client: "My ingredients" page
-- [ ] Client: create / edit ingredient form
-- [ ] Remove the old ingredient routes and `batchimport.js`
+Tasks (built 2026-11-20):
+- [x] Server: `ingredients` collection with `ownerId` (the old cocktail collection was already empty)
+- [x] Server: create / list / get / edit / delete routes, all behind `requireAuth`, with shared validation (`helpers/validateIngredient.js`) and owner check (`helpers/findOwnIngredient.js`)
+- [x] Client: "My Ingredients" page + sidebar link
+- [x] Client: create / edit ingredient form (`IngredientForm.js`), phone first; checks number boxes before sending
+- [x] Remove the old ingredient routes, `batchimport.js` and the cocktail images
 
 ---
 

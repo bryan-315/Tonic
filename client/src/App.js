@@ -9,6 +9,10 @@ import About from './pages/About';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 //import Profile from './pages/Profile';
+// Ingredients
+import MyIngredients from './pages/MyIngredients';
+import CreateIngredient from './pages/CreateIngredient';
+import EditIngredient from './pages/EditIngredient';
 // Drinks
 import CreateDrink from './pages/CreateDrink';
 import DrinkPage from './pages/DrinkPage';
@@ -43,6 +47,10 @@ const App = () => {
                         {/* Users */}
                         <Route path='/login' element={<Login />} />
                         <Route path='/signup' element={<Signup />} />
+                        {/* Ingredients */}
+                        <Route path='/ingredients' element={<MyIngredients />} />
+                        <Route path='/ingredients/new' element={<CreateIngredient />} />
+                        <Route path='/ingredients/:id/edit' element={<EditIngredient />} />
                         {/* Drinks */}
                         <Route path='/create' element={<CreateDrink />} />
                         <Route path='/all-drinks' element={<AllDrinks />} />

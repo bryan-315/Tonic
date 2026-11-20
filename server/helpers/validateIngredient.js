@@ -12,11 +12,11 @@
 //   calories: 120, protein: 24, carbs: 3, fat: null
 // }
 
-// Limits so nobody can save absurd or huge data
+// Limits so nobody can save absurdly long text or huge lists.
+// (Numbers have no upper limit: a big number is odd but still a number.)
 const MAX_NAME_LENGTH = 100;
 const MAX_UNIT_LENGTH = 20;
 const MAX_UNITS = 10;
-const MAX_NUMBER = 100000;
 
 // true for a real, finite number (rejects strings like "12", NaN and Infinity)
 const isNumber = (x) => typeof x === "number" && Number.isFinite(x);
@@ -27,7 +27,7 @@ const isNumber = (x) => typeof x === "number" && Number.isFinite(x);
 // - anything else     -> error
 const cleanOptionalMacro = (value, label) => {
     if (value === undefined || value === null) return { value: null };
-    if (!isNumber(value) || value < 0 || value > MAX_NUMBER) {
+    if (!isNumber(value) || value < 0) {
         return { error: `${label} must be a number of 0 or more, or left blank.` };
     }
     return { value };
@@ -60,7 +60,7 @@ const validateIngredient = (body) => {
     // .some() in a normal if: stops at the first bad row (never `return` inside .forEach)
     const badRow = serving.some((row) =>
         !row || typeof row !== "object" ||
-        !isNumber(row.amount) || row.amount <= 0 || row.amount > MAX_NUMBER ||
+        !isNumber(row.amount) || row.amount <= 0 ||
         typeof row.unit !== "string" || !row.unit.trim() || row.unit.trim().length > MAX_UNIT_LENGTH
     );
     if (badRow) {
@@ -78,7 +78,7 @@ const validateIngredient = (body) => {
     }
 
     // --- calories: the only required macro ---
-    if (!isNumber(calories) || calories < 0 || calories > MAX_NUMBER) {
+    if (!isNumber(calories) || calories < 0) {
         return { error: "Calories must be a number of 0 or more." };
     }
 

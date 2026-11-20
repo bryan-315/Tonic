@@ -1,0 +1,184 @@
+/* Ingredient form. Phone first: these base styles are for a narrow screen.
+   The @media rule at the bottom adjusts things for wider screens. */
+
+.form {
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+/* A label + its input, stacked */
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin-bottom: 1rem;
+    min-width: 0; /* lets inputs shrink inside the macro grid instead of overflowing */
+}
+
+.label {
+    font-size: 0.95rem;
+}
+
+/* Small grey "kcal" / "g · optional" next to a label */
+.unit {
+    font-size: 0.75rem;
+    opacity: 0.7;
+}
+
+/* Text inputs. 16px font size matters on iPhones: smaller fonts make Safari zoom in on tap. */
+.input {
+    width: 100%;
+    min-height: 44px; /* comfortable finger-sized tap target */
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #444;
+    border-radius: 6px;
+    background-color: #2A2A2A;
+    color: var(--text-color);
+    font-size: 16px;
+    box-sizing: border-box;
+}
+.input::placeholder {
+    color: rgba(205, 236, 245, 0.4);
+}
+.input:focus {
+    outline: 2px solid var(--third-color);
+    outline-offset: 1px;
+    background-color: #333;
+}
+
+/* Boxes around "Serving" and "Per serving" */
+.group {
+    border: 1px solid #444;
+    border-radius: 8px;
+    padding: 0.75rem 1rem 0.5rem;
+    margin: 0 0 1.25rem;
+    background-color: #1C1C1C;
+}
+
+.legend {
+    padding: 0 0.35rem;
+    font-weight: bold;
+}
+
+.hint {
+    margin: 0 0 0.75rem;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    opacity: 0.8;
+}
+
+/* One "amount + unit + ✕" row */
+.servingRow {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.amountInput {
+    flex: 0 0 5.5rem; /* fixed width: amounts are short */
+}
+
+.unitInput {
+    flex: 1;
+    min-width: 0;
+}
+
+/* The "=" in front of extra unit rows */
+.equals {
+    width: 1rem;
+    text-align: center;
+    opacity: 0.7;
+}
+
+.removeBtn {
+    flex: 0 0 44px;
+    height: 44px;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: #E06C75;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+.removeBtn:hover {
+    background-color: #2A2A2A;
+}
+
+.addBtn {
+    min-height: 44px;
+    margin: 0.25rem 0 0.75rem;
+    padding: 0 1rem;
+    border: 1px dashed var(--third-color);
+    border-radius: 6px;
+    background: transparent;
+    color: var(--third-color);
+    font-size: 0.95rem;
+    cursor: pointer;
+}
+.addBtn:hover {
+    background-color: #2A2A2A;
+}
+
+/* Calories / protein / carbs / fat: 2 columns even on phones, the numbers are short */
+.macroGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 0.75rem;
+}
+
+.error {
+    margin: 0 0 1rem;
+    padding: 0.75rem;
+    border-radius: 6px;
+    background-color: rgba(224, 108, 117, 0.15);
+    color: #F2A7AE;
+}
+
+/* Save + Cancel: full width and stacked on phones (easy to hit with a thumb) */
+.actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.submitBtn,
+.cancelBtn {
+    min-height: 48px;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.submitBtn {
+    border: none;
+    background-color: var(--second-color);
+    color: #fff;
+}
+.submitBtn:hover {
+    background-color: var(--third-color);
+    color: var(--bg-color);
+}
+.submitBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.cancelBtn {
+    border: 1px solid #444;
+    background: transparent;
+    color: var(--text-color);
+}
+
+/* Wider screens: put the buttons side by side */
+@media (min-width: 600px) {
+    .actions {
+        flex-direction: row;
+    }
+    .submitBtn,
+    .cancelBtn {
+        flex: 1;
+    }
+}

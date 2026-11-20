@@ -1,0 +1,140 @@
+/* Styles for the ingredient pages (list, create, edit). Phone first. */
+
+.page {
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+/* Title row: heading on the left, "+ New" button on the right */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.heading {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.newBtn {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 1rem;
+    border-radius: 6px;
+    background-color: var(--second-color);
+    color: #fff;
+    white-space: nowrap;
+}
+.newBtn:hover {
+    background-color: var(--third-color);
+    color: var(--bg-color);
+}
+
+/* The list of ingredients */
+.list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+/* Each ingredient is one big tappable card that opens the edit page */
+.card {
+    display: block;
+    padding: 0.85rem 1rem;
+    border: 1px solid #3a3a3a;
+    border-radius: 8px;
+    background-color: #1C1C1C;
+    color: var(--text-color);
+}
+.card:hover,
+.card:focus-visible {
+    border-color: var(--third-color);
+}
+
+.name {
+    margin: 0 0 0.25rem;
+    font-size: 1.05rem;
+    font-weight: bold;
+    color: var(--third-color);
+    overflow-wrap: anywhere; /* long names wrap instead of stretching the page */
+}
+
+.serving,
+.macros {
+    margin: 0;
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+.serving {
+    opacity: 0.75;
+}
+
+/* Friendly message when there are no ingredients yet */
+.empty {
+    padding: 2rem 1rem;
+    text-align: center;
+    line-height: 1.6;
+}
+
+.prompt {
+    text-align: center;
+    padding: 2rem 1rem;
+}
+.prompt a {
+    color: var(--third-color);
+    text-decoration: underline;
+}
+
+.errorBox {
+    padding: 0.75rem;
+    border-radius: 6px;
+    background-color: rgba(224, 108, 117, 0.15);
+    color: #F2A7AE;
+}
+
+/* Delete button on the edit page: clearly separate from Save so it isn't hit by accident */
+.dangerZone {
+    max-width: 480px;
+    margin: 2rem auto 0;
+    padding-top: 1rem;
+    border-top: 1px solid #333;
+}
+
+.deleteBtn {
+    width: 100%;
+    min-height: 48px;
+    border: 1px solid #E06C75;
+    border-radius: 6px;
+    background: transparent;
+    color: #E06C75;
+    font-size: 1rem;
+    cursor: pointer;
+}
+.deleteBtn:hover {
+    background-color: rgba(224, 108, 117, 0.15);
+}
+.deleteBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Wider screens: a bit more breathing room */
+@media (min-width: 600px) {
+    .page {
+        padding: 2rem;
+    }
+    .heading {
+        font-size: 1.75rem;
+    }
+}
