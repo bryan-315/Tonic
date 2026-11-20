@@ -3,6 +3,8 @@
 const createIngredient = require("./createIngredient.js");
 const getIngredients = require("./getIngredients.js");
 const getOneIngredient = require("./getOneIngredient.js");
+const editIngredient = require("./editIngredient.js");
+const deleteIngredient = require("./deleteIngredient.js");
 const createDrink = require("./createDrink.js");
 const getAllDrinks = require("./getAllDrinks.js");
 const getOneDrink = require("./getOneDrink.js");
@@ -19,6 +21,8 @@ module.exports = {
     createIngredient,
     getIngredients,
     getOneIngredient,
+    editIngredient,
+    deleteIngredient,
     getOneDrink,
     createDrink,
     getAllDrinks,

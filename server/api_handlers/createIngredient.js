@@ -1,57 +1,46 @@
 // Shared database connection, opened once when the server starts (see db.js)
-const { db } = require("../db")
-const { ObjectId } = require('mongodb');
+const { db } = require("../db");
+const { validateIngredient, NAME_COLLATION } = require("../helpers/validateIngredient");
 
-
-
+// POST /api/ingredients  (protected by requireAuth, so req.userId is the logged-in user)
 const createIngredient = async (req, res) => {
-    try{
-        const { name, category, alcohol, tags, unit } = req.body;
-        // Check mandatory fields
-        if (!name || typeof name !== 'string') {
-            return res.status(400).json({ error: 'Invalid name' });
-        }
-        // Normalize the casing of the name
-        const normalizedName = name.trim().replace(/\b\w/g, char => char.toUpperCase());
-        if (normalizedName.length < 2) {
-            return res.status(400).json({ error: 'Name must be at least 2 characters long' });
-        }
-        if (!category || typeof category !== 'string') {
-            return res.status(400).json({ error: 'Invalid category' });
-        }
-        if (alcohol === undefined || typeof alcohol !== 'boolean') {
-            return res.status(400).json({ error: 'Invalid alcohol' });
+    try {
+        // Check and clean everything the browser sent
+        const { error, value } = validateIngredient(req.body);
+        if (error) {
+            return res.status(400).json({ status: 400, message: error });
         }
 
-        // Check if the ingredient already exists
-        const existingIngredient = await db.collection('ingredients').findOne({ 
-            name: { $regex: `^${normalizedName}$`, $options: 'i' }, // Case-insensitive match
-        });
-        if (existingIngredient) {
-            return res.status(409).json({ error: 'Ingredient already exists' });
+        const ingredients = db.collection("ingredients");
+
+        // Block duplicate names for the SAME user, ignoring upper/lowercase.
+        // Two different users can both have a "Whey".
+        const duplicate = await ingredients.findOne(
+            { ownerId: req.userId, name: value.name },
+            { collation: NAME_COLLATION }
+        );
+        if (duplicate) {
+            return res.status(409).json({ status: 409, message: `You already have an ingredient called "${duplicate.name}".` });
         }
 
-        // Create the new ingredient object
         const newIngredient = {
-            name: normalizedName,
-            category,
-            alcohol
+            ...value,
+            // Owner comes from the login token, never from req.body
+            ownerId: req.userId,
+            createdAt: new Date(),
+            updatedAt: new Date(),
         };
-        // Optional fields
-        if (tags && Array.isArray(tags)) {
-            newIngredient.tags = tags;
-        }
-        if (unit && typeof unit === 'string') {
-            newIngredient.unit = unit;
-        }
-        // Insert the new ingredient into the database
-        const result = await db.collection('ingredients').insertOne(newIngredient);
-        console.log('Inserted ingredient with ID:', result.insertedId);
-        return res.status(201).json({ status: 201, message: 'Ingredient created successfully', ingredient: { ...newIngredient, _id: result.insertedId } });
+
+        const result = await ingredients.insertOne(newIngredient);
+        return res.status(201).json({
+            status: 201,
+            message: "Ingredient created",
+            ingredient: { ...newIngredient, _id: result.insertedId },
+        });
     } catch (err) {
-        console.error('Error connecting to the database', err);
-        return res.status(500).json({ error: 'Internal server error' });
+        console.error("createIngredient error:", err);
+        return res.status(500).json({ status: 500, message: "Internal server error" });
     }
-}
+};
 
 module.exports = createIngredient;

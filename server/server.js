@@ -13,6 +13,8 @@ const {
     createIngredient,
     getIngredients,
     getOneIngredient,
+    editIngredient,
+    deleteIngredient,
     getAllDrinks,
     getOneDrink,
     getUserDrinks,
@@ -58,11 +60,16 @@ App.get("/", (req, res) => {
 });
 
 // API endpoints
-App.post("/api/ingredients", createIngredient);
 
-App.get("/api/ingredients", getIngredients);
-App.get("/api/ingredients/:id", getOneIngredient);
+// Ingredients: private to each user, so every route needs a login (requireAuth).
+// The handlers know who you are from req.userId (from the token), never from the URL or body.
+App.post("/api/ingredients", requireAuth, createIngredient);
+App.get("/api/ingredients", requireAuth, getIngredients);        // my ingredients
+App.get("/api/ingredients/:id", requireAuth, getOneIngredient);
+App.patch("/api/ingredients/:id", requireAuth, editIngredient);
+App.delete("/api/ingredients/:id", requireAuth, deleteIngredient);
 
+// Drinks (old cocktail routes, replaced by recipes in Feature 4)
 App.post("/api/drinks", createDrink);
 App.get("/api/drinks", getAllDrinks);
 App.get("/api/drinks/:drinkId", getOneDrink);

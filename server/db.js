@@ -28,6 +28,4 @@ const closeDb = async () => {
     console.log("MongoDB connection closed");
 };
 
-// `client` is still exported only for batchimport.js, a one-off script that runs
-// outside the server and opens/closes its own connection (that's correct for a script).
-module.exports = { client, db, connectToDb, closeDb };
+module.exports = { db, connectToDb, closeDb };
