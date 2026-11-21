@@ -7,3 +7,6 @@ server/.env
 
 # Ignore .env file in the client directory
 client/.env
+
+# Personal Claude Code settings (permissions etc.); project skills in .claude/skills ARE committed
+.claude/settings.local.json

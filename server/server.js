@@ -15,6 +15,11 @@ const {
     getOneIngredient,
     editIngredient,
     deleteIngredient,
+    createRecipe,
+    getRecipes,
+    getOneRecipe,
+    editRecipe,
+    deleteRecipe,
     getAllDrinks,
     getOneDrink,
     getUserDrinks,
@@ -68,6 +73,14 @@ App.get("/api/ingredients", requireAuth, getIngredients);        // my ingredien
 App.get("/api/ingredients/:id", requireAuth, getOneIngredient);
 App.patch("/api/ingredients/:id", requireAuth, editIngredient);
 App.delete("/api/ingredients/:id", requireAuth, deleteIngredient);
+
+// Recipes: also private to each user. Responses include the ingredients the recipes use,
+// so the website can calculate totals.
+App.post("/api/recipes", requireAuth, createRecipe);
+App.get("/api/recipes", requireAuth, getRecipes);                // my recipes
+App.get("/api/recipes/:id", requireAuth, getOneRecipe);
+App.patch("/api/recipes/:id", requireAuth, editRecipe);
+App.delete("/api/recipes/:id", requireAuth, deleteRecipe);
 
 // Drinks (old cocktail routes, replaced by recipes in Feature 4)
 App.post("/api/drinks", createDrink);

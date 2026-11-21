@@ -123,40 +123,67 @@ Tasks (built 2026-11-20):
 
 ## 4. Recipes built from ingredients
 
-**Story 3.1:** As a user, I want to build a recipe from my saved ingredients and amounts, so I can see its total calories and protein.
+**Decided (2026-11-20):**
+- Recipes are **private** for now (like ingredients). The "All Recipes" page goes away and comes back as the friends feed in Feature 6.
+- Old test drinks in the database get deleted in step 4e, when the drink code is removed.
+- A recipe stores only `{ ingredientId, amount, unit }`; totals are always calculated from the ingredient's current macros.
+
+Build steps (each tested and committed on its own):
+- [x] **4a** Server: recipes API + one shared macro-math function (well tested): `client/src/utils/macros.js` + `macros.test.js` (run `yarn test` in `client/`)
+- [ ] **4b** Recipe form (pick ingredients, amount + unit, live totals) + My Recipes list
+- [ ] **4c** Recipe page: adjust amounts without saving, reset, portions
+- [ ] **4d** Ingredient delete dialog (used in recipes → delete / keep / cancel), soft delete, block removing a used unit
+- [ ] **4e** Remove drinks: pages, likes, badge, old data; rename sidebar; update home page
+
+**Design decisions (grilling session, 2026-11-21):**
+
+*What a recipe is*
+- **Name** (required, unique per user ignoring capitals, like ingredients)
+- **Ingredient lines** (at least 1): `{ ingredientId, amount, unit }`, in the order added (no reordering for now)
+  - The same ingredient may appear twice (e.g. butter in the sauce and for the pan)
+  - Unit is picked from a dropdown of **that ingredient's own units** only
+  - Amount: a number above 0; "1,5" accepted; a clear message naming the line if it's not a number
+- **Description**: one free-text box, like a blank notebook page (notes, steps, anything). Plain text, line breaks kept, max 5,000 characters, no formatting tools
+- **Photo**: optional, one per recipe, can be replaced or removed (existing Cloudinary uploader)
+- **Portions**: optional count (whole number, 2–50) + optional portion name (default "portion"), e.g. `6 × burrito`
+- No tags or categories for now
+
+*Building a recipe (form)*
+- "Add ingredient" opens a **full-screen panel over the form** (same URL, so nothing typed is lost); ✕/Back closes it
+- The panel lists all my ingredients with a **search box** on top; tap rows to select (✓), then **"Add 3 ingredients"**
+- Ingredients already in the recipe show an "in recipe" tag but can still be picked
+- A newly added line is pre-filled with the ingredient's **first unit and its amount** (Whey → `1 scoop`, Oats → `100 g`)
+- Totals update live while editing
+- Missing ingredient: for now, just a link to "New ingredient" (creating one inside the form is a future idea)
+
+*Showing numbers*
+- Calories as whole numbers (`412 kcal`), grams with 1 decimal (`31.5 g`); rounding is display-only, saved values stay exact
+- My Recipes card: name, small photo if any, and totals (`kcal · protein`). If portions are set, show **per portion** instead (`412 kcal · 31 g protein per burrito`). To be reviewed once it's visible
+
+*Recipe page (adjust for today)*
+- Change any line's amount or unit, **and the portion count** ("made 5 instead of 6"), without saving; totals update instantly; **Reset** goes back to the saved recipe
+
+*Deleted ingredients and deleting recipes*
+- A "kept" (soft-deleted) ingredient shows greyed out as "(deleted ingredient)": its amount/unit can still be changed or the line removed, but it can't be opened and isn't in the picker
+- Deleting a recipe: a simple "Delete Chili? This can't be undone." confirm
+
+**Story 4.1:** As a user, I want to build a recipe from my saved ingredients and amounts, so I can see its total calories and protein.
 
 Done when:
-- [ ] A recipe has: name, optional description, optional image, list of `{ ingredient, amount, unit }`, optional steps
-- [ ] When adding an ingredient, I pick from that ingredient's units (e.g. scoops **or** grams)
-- [ ] Recipe page shows totals (calories, protein, carbs, fat)
-- [ ] Totals are calculated from the ingredients, not saved by hand
+- [ ] I can create, edit and delete recipes as described above
+- [ ] Recipe page and card show totals (calories, protein, carbs, fat), calculated from the ingredients
+- [ ] A blank optional macro counts as 0 in totals
 
-**Story 3.2:** As a user, I want to change amounts on a recipe page ("150 g potatoes today instead of 85 g") and see the new totals instantly, without editing the saved recipe.
+**Story 4.2:** As a user, I want to change amounts (and the portion count) on a recipe page and see new totals instantly, without editing the saved recipe.
 
-Done when:
-- [ ] Each ingredient amount (and unit) on the recipe page can be changed
-- [ ] Totals update as I type
-- [ ] A "reset" button goes back to the saved amounts
+**Story 4.3:** As a user, I want recipes for food and drinks alike, so a protein shake works the same way as a meal.
 
-**Story 3.3:** As a user, I want recipes for food and drinks alike, so a protein shake works the same way as a meal.
-
-**Story 3.4:** As a meal prepper, I want to say a recipe makes several portions (e.g. 6 burritos), so I can see and log the macros for one portion.
+**Story 4.4:** As a meal prepper, I want to say a recipe makes several portions (e.g. 6 burritos), so I can see and log the macros for one portion.
 
 Done when:
 - [ ] By default a recipe shows totals for the whole thing
-- [ ] Optionally I can set a portion count and a portion name (e.g. `6` × `burrito`)
-- [ ] Then the recipe page also shows macros per portion (total ÷ 6)
-- [ ] In the diary I can log portions (e.g. "2 burritos")
-
-Tasks:
-- [ ] Remove the official badge (`isOfficial`, `OfficialBadge.js`)
-- [ ] Replace the drink shape with the recipe shape (server)
-- [ ] Rename drinks → recipes on the server (collection, routes, handler files)
-- [ ] Rename drinks → recipes on the client (pages, components, text, URLs)
-- [ ] Recipe form: pick ingredients from my list + enter amounts
-- [ ] A shared function that calculates macros (used by recipes and the diary)
-- [ ] Decide what happens to a recipe when one of its ingredients is deleted
-- [ ] Remove likes for now (`likedDrinks`, like/unlike routes, Liked page); social comes back in Feature 6
+- [ ] With portions set, it also shows macros per portion (total ÷ 6)
+- [ ] In the diary I can log portions (e.g. "2 burritos") (Feature 5)
 
 ---
 
@@ -218,6 +245,10 @@ Done when:
 
 ## Ideas (not planned yet)
 
+- Create a new ingredient from inside the recipe form, without leaving it
+- Reorder ingredient lines in a recipe (drag and drop)
+- Formatting (bold, lists) in the recipe description
+- Several photos per recipe
 - Make Tonic installable on phones (PWA: home-screen icon, full screen)
 - Real phone app with React Native, using the same server
 - Daily goals (e.g. 180 g protein) with a progress bar
